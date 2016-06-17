@@ -4,22 +4,23 @@
 
   
 \usepackage{amsmath}
-\title[EG \LaTeX\ Author Guidelines]%
-      {\LaTeX\ Author Guidelines for EUROGRAPHICS Proceedings Manuscripts}
+\title[3D Face Reconstruction with Silhouette Constraints]%
+      {3D Face Reconstruction with Silhouette Constraints}
 
 % for anonymous conference submission please enter your SUBMISSION ID
 % instead of the author's name (and leave the affiliation blank) !!
-\author[D. Fellner \& S. Behnke]
-       {D.\,W. Fellner\thanks{Chairman Eurographics Publications Board}$^{1,2}$
-        and S. Behnke$^{2}$
+%\author[D. Fellner \& S. Behnke]
+       %{D.\,W. Fellner\thanks{Chairman Eurographics Publications Board}$^{1,2}$
+%        and S. Behnke$^{2}$
 %        S. Spencer$^2$\thanks{Chairman Siggraph Publications Board}
-        \\
+%        \\
 % For Computer Graphics Forum: Please use the abbreviation of your first name.
-         $^1$TU Darmstadt \& Fraunhofer IGD, Germany\\
-         $^2$Institut f{\"u}r ComputerGraphik \& Wissensvisualisierung, TU Graz, Austria
+         %$^1$TU Darmstadt \& Fraunhofer IGD, Germany\\
+%         $^2$Institut f{\"u}r ComputerGraphik \& Wissensvisualisierung, TU Graz, Austria
 %        $^2$ Another Department to illustrate the use in papers from authors
 %             with different affiliations
-       }
+%       }
+\author{Anonymous}
 
 % ------------------------------------------------------------------------
 
@@ -34,31 +35,20 @@
 %-------------------------------------------------------------------------
 \begin{document}
 
-% \teaser{
-%  \includegraphics[width=\linewidth]{eg_new}
-%  \centering
-%   \caption{New EG Logo}
-% \label{fig:teaser}
-% }
+\teaser{
+  \includegraphics[width=\linewidth]{figures/teaser.pdf}
+  \centering
+   \caption{We introduce silhouette constraints to improve the quality of unconstrained 3D face reconstruction. Here, we show a comparison between the state of the art approach by Roth et al. \cite{Roth:2015:UFR} and our technique. Note how our approach is more faithful to the silhouettes of the input images, especially around the nose region on the right.}
+ \label{fig:teaser}
+}
 
 \maketitle
 
 \begin{abstract}
-   The ABSTRACT is to be in fully-justified italicized text, 
-   between two horizontal lines,
-   in one-column format, 
-   below the author and affiliation information. 
-   Use the word ``Abstract'' as the title, in 9-point Times, boldface type, 
-   left-aligned to the text, initially capitalized. 
-   The abstract is to be in 9-point, single-spaced type.
-   The abstract may be up to 3 inches (7.62 cm) long. \\
-   Leave one blank line after the abstract, 
-   then add the subject categories according to the ACM Classification Index 
-   (see http://www.acm.org/class/1998/).
-
-\begin{classification} % according to http://www.acm.org/class/1998/
-\CCScat{Computer Graphics}{I.3.3}{Picture/Image Generation}{Line and curve generation}
-\end{classification}
+In this paper we introduce silhouette constraints to improve the quality of unconstrained 3D face reconstruction. Previously, state of the art unconstrained 3D face reconstruction techniques relied solely on photometric consistency and matching sparse facial landmarks. We show that constraining the silhouettes of the 3D reconstruction to match silhouettes in the input images can further improve reconstruction quality. Our technique automatically detects silhouettes, and iteratively matches silhouette points computed from the current 3D reconstruction with silhouettes in the input images. We demonstrate that our results improve on the previous state of the art in unconstrained 3D face reconstruction, and that our additional constraints can easily be included in the iterative reconstruction at little additional cost.
+%\begin{classification} % according to http://www.acm.org/class/1998/
+%\CCScat{Computer Graphics}{I.3.3}{Picture/Image Generation}{Line and curve generation}
+%\end{classification}
 
 \end{abstract}
 
@@ -66,21 +56,27 @@
 %-------------------------------------------------------------------------
 \section{Introduction}
 
-Please follow the steps outlined in this document very carefully when
-submitting your manuscript to Eurographics.
+We consider the problem of 3D face reconstruction from internet photo collections. Our goal is to reconstruct 3D models of individuals from collections of images in uncontrolled environments, including variations in illumination, pose, and expression, which has been called ``face reconstruction in the wild'' \cite{Kemelmacher-Shlizerman:2011:FRW} or ``unconstrained 3D face reconstruction'' \cite{Roth:2015:UFR}. Such 3D reconstructions can be useful for face and expression recognition \cite{Liu:2005:PFR,Wang:2006:FER}, or to produce facial animations \cite{Li:2013:RFA}.
 
-You may as well use the \LaTeX\ source as a template to typeset your own
-paper. In this case we encourage you to also read the \LaTeX\ comments
-embedded in the document.
+Our work is inspired by recent progress in unconstrained face recognition by Roth et al. \cite{Roth:2015:UFR}. They leverage state of the art photometric stereo techniques, recent advances in 2D facial landmark estimation, and a full 3D face representation (instead of 2.5D height fields) to obtain impressive results, considering that the input consists of images under various illumination conditions, with different poses and facial expressions, and neither video or stereo data is included in the input. Nonetheless, the quality of the 3D reconstructions is limited since the only constraints on the reconstruction are photometric consistency and correspondence with sparse facial landmarks. 
+
+In this paper, we introduce silhouette constraints to improve the quality of unconstrained 3D face reconstruction. Our main idea is to extract silhouette points on the 3D reconstruction, and match them with automatically detected silhouette points in the input images. We include these constraints in the 3D reconstruction objective, which we solve in an iterative process. In each iteration step, we recompute the silhouette points using the current 3D reconstruction and update the corresponding contraints in the objective. As a consequence, the silhouettes of the 3D reconstruction converge towards the silhouettes in the input images. Our results demonstrate that the new silhouette constraints lead to higher reconstruction quality.
+
+The rest of this paper is organized as follows: We first review related work in Section~\ref{sec:related}, and provide a brief overview of state of the art unconstrained face reconstruction as proposed by Roth et al.~\cite{Roth:2015:UFR} in Section~\ref{sec:unconstrainedfacereconstruction}. In Section~\ref{sec:silhouetteconstraints} we introduce the novel silhouette constraints as our main contribution. Finally, we present results in Section~\ref{sec:results} and conclude in Section~\ref{sec:conclusions}.
+
 
 %-------------------------------------------------------------------------
 \section{Related work}
+\label{sec:related}
 
-Please read the following carefully.
+\paragraph*{Face Reconstruction from Image Collections} Face reconstruction ``in the wild'' from collections of images under uncontrolled illumination, and with varying facial pose and expressions, has been a long standing problem in computer vision. State of the art methods are mostly based on photometric stereo, such as the pioneering work by Kemelmacher-Shlizerman and Seitz \cite{Ira11}, and its extension to video input \cite{Suwajanakorn2014}. This approach has been improved recently by Roth et al.~\cite{Roth:2015:UFR} who solve for a full 3D mesh instead of a 2.5D height field, and leverage state of the art 2D facial landmark estimation \cite{Zan:2013:LCM}. We build on the work by Roth et al., but extend it to include silhouette constraints to overcome some of the limitations of photometric stereo.
+
+\paragraph*{Face Tracking and Animation from Video} Research in the Computer Graphics community has achieved impressive results for the problem of tracking, reconstructing, and animating faces based on video data. Generally, state of the art techniques represent faces and facial expressions using dynamic expression models, also called blendshape models \cite{Cao:2014:FWA}. While earlier work relied on RGBD video input \cite{Weise:2011:RPF,Li:2013:RFA,Bouaziz:2013:OMR}, it is now possible to solve the tracking and reconstruction problem based on RGB video data in real-time at impressive quality as demonstrated by Cao et al. \cite{Cao:2014:DDE,Cao:2015:RHF}. The key idea in this work is to learn a regression model that maps 2D video frames to 3D facial landmarks, and then to register the DEM to the 3D landmarks \cite{Cao:2013:SRR}. While this approach required calibration for individual users, it has then been extended to a calibration-free approach that iteratively refines the model \cite{Cao:2014:DDE}. A most recent extension also synthesizes highly detailed geometry such as wrinkles \cite{Cao:2015:RHF}. The key difference to our work is that these techniques either require calibration for each user, or they rely on the coherence of video input to adapt the model in an iterative manner.
 
 
 %-------------------------------------------------------------------------
-\section{Review of method in \cite{Roth15}}
+\section{Unconstrained Face Reconstruction}
+\label{sec:unconstrainedfacereconstruction}
 
 First, in \cite{Roth15} they compute 2D landmarks for all images using the approach in [5]. With the 2D landmarks, Warp the 3D model on the images by project 3D landmarks on 2D landmarks on image. Estimate the weak prospecive projection matrix $P_{i}$ for each image. Deform the 3D template using laplacian surface editing and adapt for the lanmark constraints until convergence. Update the vertex verctor $X$ by minimizing the energy function:
 \begin{displaymath}
@@ -103,10 +99,12 @@ Finally, the mesh is deformed by minimizing the energy as following:
 E=\|\mathcal{L}X - H^{k}n\|^2+\lambda_{b}\|\mathcal{L}_{b}X - \mathcal{L}X^{k}\|^2+  \lambda_{l}\sum_{i}{\|P_{i}D_{i}X-W_{i}\|^2} 
 \end{displaymath} 
 
-
 From the results shown in \cite{Roth15}, we can see that the frontal face of the 3D reconstructed model fits to the individual, but the profile doesn't fit well, especially the nose and chin.The nose is supposed to be taller and the chin should be more curved. So we propose to use silhouette of the faces to refine the reconstructed face shape.
+
 %-------------------------------------------------------------------------
-\section{Approach}
+\section{Silhouette Constraints}
+\label{sec:silhouetteconstraints}
+
 Continue from the previous work, we refine the face model to make the shape fit better with the real image. We extract the silhouettes on 3D model and in each 2D images and build correpondence between the silhouette vertex on face model and the silhouette points in images. Then add silhouette constraint in the mesh deformation.
 
 The main step can be described as following:
@@ -184,6 +182,8 @@ $X$ can be solved in a linear system as:
 
 %-------------------------------------------------------------------------
 \section{Experiment}
+\label{sec:results}
+
 In this section we present the visualization result of the improvement of our algorithm.
 
 \textbf{Dataset} We collect the photo of celebrities on the Internet. First we tried to use Google API to collect the photo by searching celebrities' name, but less than half of the result can be use for the experiment, since many of the returned images are  or are not related to the celebrity. So we collect the images on the websites that own specific gallery webpage for the celebrities, Mtime and Douban. And we write a python script to download images for different individuals. For the initial template used to reconstruct the model, we use the face model in \cite{Zhang04}. The 68 landmarks on images are detected using the approach in \cite{kazemi2014one} 
@@ -216,6 +216,7 @@ From the result in Fig.3 we can see, compared with the previous method, our resu
 
 %-------------------------------------------------------------------------
 \section{Conclusions}
+\label{sec:conclusions}
 
 Please direct any questions to the production editor in charge of
 these proceedings.

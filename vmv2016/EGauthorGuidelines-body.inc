@@ -63,9 +63,6 @@
 \end{abstract}
 
 
-
-
-
 %-------------------------------------------------------------------------
 \section{Introduction}
 
@@ -83,9 +80,9 @@ Please read the following carefully.
 
 
 %-------------------------------------------------------------------------
-\section{Review of method in [1]}
+\section{Review of method in \cite{Roth15}}
 
-First, they compute 2D landmarks for all images using the approach in [5]. With the 2D landmarks, Warp the 3D model on the images by project 3D landmarks on 2D landmarks on image. Estimate the weak prospecive projection matrix $P_{i}$ for each image. Deform the 3D template using laplacian surface editing and adapt for the lanmark constraints until convergence. Update the vertex verctor $X$ by minimizing the energy function:
+First, in \cite{Roth15} they compute 2D landmarks for all images using the approach in [5]. With the 2D landmarks, Warp the 3D model on the images by project 3D landmarks on 2D landmarks on image. Estimate the weak prospecive projection matrix $P_{i}$ for each image. Deform the 3D template using laplacian surface editing and adapt for the lanmark constraints until convergence. Update the vertex verctor $X$ by minimizing the energy function:
 \begin{displaymath}
 E_{warp}(X,P_{i})=\|\mathcal{L}X - \mathcal{L}X_{0}\|^2+\lambda_{l}\sum_{i}{\|P_{i}D_{i}X-W_{i}\|^2} 
 \end{displaymath} 
@@ -93,7 +90,7 @@ E_{warp}(X,P_{i})=\|\mathcal{L}X - \mathcal{L}X_{0}\|^2+\lambda_{l}\sum_{i}{\|P_
 where $\mathcal{L}$ is a discretization of the Laplace-Beltrami operator, with the weight $\mathcal{L}_{ij}=\frac{1}{2}(cot\alpha_{ij}+cot\beta_{ij})$ where $\alpha_{ij}$ and $\beta_{ij}$ are the opposite angles of edge if in the two incident triangles. $D_{i}$ is the selection matrix picking out the landmarks that have a correspondence in image $i$, it's a diagonal matrix with 1 on the diagonal for the vertices corresponding to such a landmark and 0 everywhere else.
  The deformed 3D template will be used as the initial template for the following steps.   
 
-Then they use photometric stereo technique to estimate normals. Refer to approach in [3], store each warped image reflectance intensity in a matrix $M$, where each row represents the pixels in one image. For the non-frontal images, some vertices are not visible. They set the intensity of the non-visible vertices as zeros and use matrix completion [26] to fulfill the missing value to obtain the full $M$. Factorize the matrix $M$ using SVD and take the rank-4 approximation to estimate the shape $S$ and light $L$, where $S$ contains the normals $n$ and albedo $\rho$, and $L$ contains the light directoin. Select the images that are modeled well by the rank-4 approximation, i.e.,$\|M-LS\|<\epsilon$.  Since the factorization is not unique, it leads to one ambiguity in $S$ and $L$, i.e., $LS=(\tilde{L}A^{-1})(A\tilde{S})$. Recover the ambiguity by solving for $\arg{\min}\underset{A}\,\|S^{t} - A\tilde{S}\|^2 $, where $S^{t}$ is the shape vector of the template. 
+Then they use photometric stereo technique to estimate normals. Refer to approach in \cite{Ira11}, store each warped image reflectance intensity in a matrix $M$, where each row represents the pixels in one image. For the non-frontal images, some vertices are not visible. They set the intensity of the non-visible vertices as zeros and use matrix completion \cite{Lin09} to fulfill the missing value to obtain the full $M$. Factorize the matrix $M$ using SVD and take the rank-4 approximation to estimate the shape $S$ and light $L$, where $S$ contains the normals $n$ and albedo $\rho$, and $L$ contains the light directoin. Select the images that are modeled well by the rank-4 approximation, i.e.,$\|M-LS\|<\epsilon$.  Since the factorization is not unique, it leads to one ambiguity in $S$ and $L$, i.e., $LS=(\tilde{L}A^{-1})(A\tilde{S})$. Recover the ambiguity by solving for $\arg{\min}\underset{A}\,\|S^{t} - A\tilde{S}\|^2 $, where $S^{t}$ is the shape vector of the template. 
 
 Given the normal vectors, they reconstruct the shape $X$ from the normals $n$ through mean curvature $H$ by minimizing $\|\mathcal{L}X-Hn\|^2$, where $H$ is the mean curvature. The mean curvature $H$ is estimated as 
 $H_{i}=\frac{1}{4A_{i}} \sum_{j\in N(i)}{(cot\alpha_{ij}+cot\beta_{ij}))e_{ij}\cdot(n_{i}-n_{j})}$, where $N(i)$ is the set of incident neighboring vertices of vertex $i$, $A_{i}$ is the sum of the triangles' areas incident to $i$, $e_{ij}$ is the edge from $i$ to $j$. The cotan weights are the same as those in the Laplacian operator $\mathcal{L}$. Update the cotan weights in each global iteration.
@@ -107,16 +104,16 @@ E=\|\mathcal{L}X - H^{k}n\|^2+\lambda_{b}\|\mathcal{L}_{b}X - \mathcal{L}X^{k}\|
 \end{displaymath} 
 
 
-From the results shown in [1], we can see that the frontal face of the 3D reconstructed model fits to the individual, but the profile doesn't fit well, especially the nose and chin.The nose is supposed to be taller and the chin should be more curved. So we propose to use silhouette of the faces to refine the reconstructed face shape.
+From the results shown in \cite{Roth15}, we can see that the frontal face of the 3D reconstructed model fits to the individual, but the profile doesn't fit well, especially the nose and chin.The nose is supposed to be taller and the chin should be more curved. So we propose to use silhouette of the faces to refine the reconstructed face shape.
 %-------------------------------------------------------------------------
 \section{Approach}
-Continue from the work in [1], we refine the face model to make the shape fit better with the real image. We extract the silhouettes on 3D model and in each 2D images and build correpondence between the silhouette vertex on face model and the silhouette points in images. Then add silhouette constraint in the mesh deformation.
+Continue from the previous work, we refine the face model to make the shape fit better with the real image. We extract the silhouettes on 3D model and in each 2D images and build correpondence between the silhouette vertex on face model and the silhouette points in images. Then add silhouette constraint in the mesh deformation.
 
 The main step can be described as following:
 
-1. Reconstruct a 3D model using the method in [1]. 
+1. Reconstruct a 3D model using the method in \cite{Roth15}. 
 
-2. Use photometric stereo to estimate the normal and compute the mean curvature using the propsed formula in [1].
+2. Use photometric stereo to estimate the normal and compute the mean curvature using the propsed formula in \cite{Roth15}.
 
 3. Estimate perspective projection matrix and rotation matrix. Extract 3D and 2D silhouette candidates for each image. Build up correspondence between 2D and 3D silhouette candidates. Discard the silhouette candidate points only show in few images.
 
@@ -190,7 +187,7 @@ $X$ can be solved in a linear system as:
 \section{Experiment}
 In this section we present the visualization result of the improvement of our algorithm.
 
-\textbf{Dataset} We collect the photo of celebrities on the website. First we tried to use Google API to collect the photo by searching celebrities' name, but less than half of the result can be use for the experiment, since many of the returned images are not portrait or are related to the celebrity. So we collect the images on the websites that own specific webpage for the celebrities, Mtime and Douban. And we write a python script to download images for different individuals. For the initial template used to reconstruct the model, we use the face model in [].
+\textbf{Dataset} We collect the photo of celebrities on the website. First we tried to use Google API to collect the photo by searching celebrities' name, but less than half of the result can be use for the experiment, since many of the returned images are not portrait or are related to the celebrity. So we collect the images on the websites that own specific webpage for the celebrities, Mtime and Douban. And we write a python script to download images for different individuals. For the initial template used to reconstruct the model, we use the face model in \cite{Zhang04}. The landmarks are detected using \cite{kazemi2014one}
 
 Extract silhouette points in a number of images of the dataset. Geoge Clooney(169/1152),  Kevin Spacey(85/468), Edward Norton(93/707), Tom Cruise(95/695) and James McAvoy(149/1038), WentworthMiller(106/737). The former number is the images used for extracting silhouette points, the latter number is the total amount of images for each celebrity.
 
@@ -242,14 +239,14 @@ these proceedings.
 
 %-------------------------------------------------------------------------
 
-%\bibliographystyle{eg-alpha}
-\bibliographystyle{eg-alpha-doi}
-
-\bibliography{egbibsample}
 
 %-------------------------------------------------------------------------
 \newpage
 
+%\bibliographystyle{eg-alpha}
+\bibliographystyle{eg-alpha-doi}
+
+\bibliography{egbibsample}
 
 \begin{figure*}[tbp]
   \centering

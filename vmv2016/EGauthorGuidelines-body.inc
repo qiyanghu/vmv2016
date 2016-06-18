@@ -4,6 +4,7 @@
 
   
 \usepackage{amsmath}
+\usepackage{amsfonts}
 \title[3D Face Reconstruction with Silhouette Constraints]%
       {3D Face Reconstruction with Silhouette Constraints}
 
@@ -156,18 +157,17 @@ To guarantee proper extraction of silhouettes from the 2D input images, we use o
 %------------------------------------------------------------------------
 \subsection{Build correspondence between 3D silhouette and 2D silhouette}
 
-Let $S_{i}$ denotes the silhouette candidates of 3D model for image $i$. Warp $S_{i}$ on image $i$.
-Warp the silhouette candidate $X_{sil3D}$ on the images and move the candidates to the nearest points on an edge in the image. From the edge of one image, for each silhouette candidates on the 3D face model  $X_{sil3D}^{i}$ , find the closest  edge points by minimizing the square distance between warped silhouette point and edge points, i.e.,
+Let $X_{sil3D}$ denotes the silhouette candidates of 3D model for image $i$. Warp the silhouette candidate $X_{sil3D}$ on the images and move the candidates to the nearest points on an edge in the image. The edge on the image is detected using Canny edge detector. ~\cite{Canny86} From the edge of one image, for each silhouette candidates on the 3D face model $X_{sil3D}^{i}$ , find the closest  edge points by minimizing the square distance between warped silhouette point and edge points, i.e.,
 \begin{displaymath}
 \arg{\min}\underset{X_{sil2D}} \|X_{sil3D}^{i} - X_{sil2D}^i\|^2 
 \end{displaymath} 
 
 Since the reconstructed model is close to the real shape of the individual, the projected silhouette should not be too far away from the correspongding edge. We set a threshold for the square distance, if the distance is larger than the threshold, that point will be considered as outlier and rejected. This can also reduce the effect by the extreme expession.
 
-For each image, we obtain the silhouette point sets and the corresponding vertex on 3D mesh. Then for each silhouette point on 3D model, we can know it's related to which images. Let $X_{j}$ denotes the silhouette vertex $j$, $I_{j}$ denotes the image set containing $X_{j}$ . $I_{ij}$ denotes image $i$ containing silhouette points correponding to $X_{j}$ . 
+For each image, we obtain the silhouette point sets and the corresponding vertex on 3D mesh. Then for each silhouette point on 3D model, we can know it's related to which images. Let $X_{j}$ denotes the silhouette vertex $j$, $I_{j}$ denotes the image set containing $X_{j}$ . $I_{ij}$ denotes image $i$ containing silhouette points correponding to $X_{j}$. 
 
 
-In our apporach, the face model is reconstructed from the average normals of images. The silhouette points that only appear in few images may lead to pointy region on 3D mesh. Especially for the chin, the extreme expression such as big mouth, may result in a bad estimation of the shape $X$. So the points showing in few images will be discarded to decrease the influence of noise in the slihouette extraction and the various expressions. 
+In our apporach, the face model is reconstructed from the average normals of images. The silhouette points that only appear in few images may lead to pointy region on 3D mesh. Especially for the chin, the extreme expression such as big mouth, may result in a bad estimation of the shape $X$. For example, we extract silhouette on a laughing face, the curve of the laughing cheek and chin is much different with the neural face, then the edge of the face in image will have bad correspondence with the 3D model. If these corresponded vertex $X_{c}$ only have corresponde with one extreme expressin image, then $X_{c}$ will get bad estimation and lead to a noise on the 3D mesh. So the slihouette points showing in few images will be discarded to decrease the influence of noise in the slihouette extraction and the various expressions. 
 
 
 % All text with the exception of the abstract must be in a two-column format.

@@ -78,13 +78,26 @@ The rest of this paper is organized as follows: We first review related work in 
 \section{Unconstrained Face Reconstruction}
 \label{sec:unconstrainedfacereconstruction}
 
-First, in \cite{Roth15} they compute 2D landmarks for all images using the approach in [5]. With the 2D landmarks, Warp the 3D model on the images by project 3D landmarks on 2D landmarks on image. Estimate the weak prospecive projection matrix $P_{i}$ for each image. Deform the 3D template using laplacian surface editing and adapt for the lanmark constraints until convergence. Update the vertex verctor $X$ by minimizing the energy function:
-\begin{displaymath}
-E_{warp}(X,P_{i})=\|\mathcal{L}X - \mathcal{L}X_{0}\|^2+\lambda_{l}\sum_{i}{\|P_{i}D_{i}X-W_{i}\|^2} 
-\end{displaymath} 
+Unconstrained 3D face reconstruction \cite{Roth15} takes as its input  a collection of facial photographs of an individual under uncrontrolled illumination and various poses and facial expresssions, and it reconstructs a full 3D reconstruction of the individual's face represented by a mesh. The method proceeds by first detecting 2D landmarks on all input images using the approach by Yan et al. \cite{Yan:2013:LCM}. Next, a 3D template mesh is deformed and projected to 2D to match the 2D landmarks. This leads to an initial, rough 3D reconstruction of the face, and a weak perspective projection matrix for each input image. Then they improve the 3D reconstruction by determining surface normals using a photometric stereo approach, and lastly they perform 3D reconstruction by refining the rough mesh to match the photometric normals. We briefly review the main components of this approach.
 
-where $\mathcal{L}$ is a discretization of the Laplace-Beltrami operator, with the weight $\mathcal{L}_{ij}=\frac{1}{2}(cot\alpha_{ij}+cot\beta_{ij})$ where $\alpha_{ij}$ and $\beta_{ij}$ are the opposite angles of edge if in the two incident triangles. $D_{i}$ is the selection matrix picking out the landmarks that have a correspondence in image $i$, it's a diagonal matrix with 1 on the diagonal for the vertices corresponding to such a landmark and 0 everywhere else.
- The deformed 3D template will be used as the initial template for the following steps.   
+Given the 2D landmarks, denoted by a vector $W_i$, for all images $i$, and a template mesh with $p$ vertices, denoted by a $3p$ dimensional vector $X_0$, the goal is to find a deformed mesh $X$ and weak projection matrices $P_i$, such that the landmarks on $X$ projected to 2D match the 2D landmarks $W_i$. The key idea is to use Laplacian surface editing \cite{Sorkine:2004:LSE} to perform mesh deformation. This leads to a minimization problem
+%
+\begin{align}
+\label{eq:warptemplate}
+E_{warp}(X,P_{i})=\|\mathcal{L}X - \mathcal{L}X_{0}\|^2+\lambda_{l}\sum_{i}{\|P_{i}D_{i}X-W_{i}\|^2},
+\end{align} 
+%
+which expresses the intuition that the mesh Laplacian \cite{Meyer2003} $\mathcal{L}X$ of the deformed mesh should stay close to the mesh Laplacian of the template $\mathcal{L}X_{0}$. In addition, $D_{i}$ is a selection matrix picking out the landmarks that have a correspondence in image $i$, that is, it is a diagonal matrix with $1$ on the diagonal for the vertices corresponding to a landmark and $0$ everywhere else. 
+
+Equation~\ref{eq:warptemplate} is solved iteratively. First, the projection matrices are obtained by fixing the template and solving for $P_i$, which is a linear least squares problem. Then, the $P_i$ are fixed and the deformed mesh $X$ is obtained in an iterative approach. This is necessary because the mesh Laplacians $\mathcal{L}X$ and $\mathcal{L}X_0$ are not rotation invariant. Hence, after each iteration step the mesh Laplacian $\mathcal{L}X_0$ of the template is rotated to align with the Laplacian $\mathcal{L}X$ obtained in the previous step.
+
+%First, in \cite{Roth15} they compute 2D landmarks for all images using the approach in [5]. With the 2D landmarks, Warp the 3D model on the images by project 3D landmarks on 2D landmarks on image. Estimate the weak prospecive projection matrix $P_{i}$ for each image. Deform the 3D template using laplacian surface editing and adapt for the lanmark constraints until convergence. Update the vertex verctor $X$ by minimizing the energy function:
+%\begin{displaymath}
+%E_{warp}(X,P_{i})=\|\mathcal{L}X - \mathcal{L}X_{0}\|^2+\lambda_{l}\sum_{i}{\|P_{i}D_{i}X-W_{i}\|^2} 
+%\end{displaymath} 
+%
+%where $\mathcal{L}$ is a discretization of the Laplace-Beltrami operator, with the weight $\mathcal{L}_{ij}=\frac{1}{2}(cot\alpha_{ij}+cot\beta_{ij})$ where $\alpha_{ij}$ and $\beta_{ij}$ are the opposite angles of edge if in the two incident triangles. $D_{i}$ is the selection matrix picking out the landmarks that have a correspondence in image $i$, it's a diagonal matrix with 1 on the diagonal for the vertices corresponding to such a landmark and 0 everywhere else.
+ %The deformed 3D template will be used as the initial template for the following steps.   
 
 Then they use photometric stereo technique to estimate normals. Refer to approach in \cite{Ira11}, store each warped image reflectance intensity in a matrix $M$, where each row represents the pixels in one image. For the non-frontal images, some vertices are not visible. They set the intensity of the non-visible vertices as zeros and use matrix completion \cite{Lin09} to fulfill the missing value to obtain the full $M$. Factorize the matrix $M$ using SVD and take the rank-4 approximation to estimate the shape $S$ and light $L$, where $S$ contains the normals $n$ and albedo $\rho$, and $L$ contains the light directoin. Select the images that are modeled well by the rank-4 approximation, i.e.,$\|M-LS\|<\epsilon$.  Since the factorization is not unique, it leads to one ambiguity in $S$ and $L$, i.e., $LS=(\tilde{L}A^{-1})(A\tilde{S})$. Recover the ambiguity by solving for $\arg{\min}\underset{A}\,\|S^{t} - A\tilde{S}\|^2 $, where $S^{t}$ is the shape vector of the template. 
 

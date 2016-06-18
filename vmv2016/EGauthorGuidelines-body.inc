@@ -120,39 +120,41 @@ Fixing the projection matrices $P_i$ makes this a linear least squares problem f
 While this approach leads to impressive results, we can see that the reconstructed profile often does not fit well with the input images, especially around the nose and chin. For example in Figure~\ref{fig:teaser} the nose is supposed to be taller and the chin should be more curved. We address these limitations by proposing novel silhouette constraints to refine the reconstructed face shape, as discussed next.
 
 %-------------------------------------------------------------------------
-\section{Silhouette Constraints}
+\section{Including Silhouette Constraints}
 \label{sec:silhouetteconstraints}
 
-Continue from the previous work, we refine the face model to make the shape fit better with the real image. We extract the silhouettes on 3D model and in each 2D images and build correpondence between the silhouette vertex on face model and the silhouette points in images. Then add silhouette constraint in the mesh deformation.
+The main idea in our work is to include additional silhouette constraints to obtain a better match between the 3D shape and the input images, and improve the 3D reconstruction. We achieve this by automatically extracting silhouettes both in the 2D images, and on the 3D model given the projection onto each image. We then build correspondences between the silhouette points in each image and on the 3D model (under the projection to each image), and finally incorporate these silhouette constraints in the final 3D reconstruction step. 
+%
+%Continue from the previous work, we refine the face model to make the shape fit better with the real image. We extract the silhouettes on 3D model and in each 2D images and build correpondence between the silhouette vertex on face model and the silhouette points in images. Then add silhouette constraint in the mesh deformation.
+%
+The main steps of our approach proceed as follows:
 
-The main step can be described as following:
+\begin{enumerate}
+\item Reconstruct a rough 3D model by deforming a template and estimating initial perspective projection and rotation matrices to match 2D landmarks, as in the method by Roth et al.~\cite{Roth15}. 
 
-1. Reconstruct a 3D model using the method in \cite{Roth15}. 
+\item Use photometric stereo to estimate per-vertex normals and mean curvatures as proposed by Roth et al.~\cite{Roth15}.
 
-2. Use photometric stereo to estimate the normal and compute the mean curvature using the propsed formula in \cite{Roth15}.
+\item Using the current projection and rotation matrices, extract 3D and 2D silhouette candidates for each image. Build up correspondences between 2D and 3D silhouette candidates. Discard silhouette candidate points that only show up in few images.
 
-3. Estimate perspective projection matrix and rotation matrix. Extract 3D and 2D silhouette candidates for each image. Build up correspondence between 2D and 3D silhouette candidates. Discard the silhouette candidate points only show in few images.
+\item Reconstruct the face model including the silhouette constraints. Re-estimate the perspective projection and rotation matrices based on the updated reconstruction. 
 
-4. Reconstruct face model with silhouette constraint.
+\item Go back to step 2 until convergence. 
+\end{enumerate}
 
-5. Go back to step 2 until convergence. 
-
-In the following subsection, we will give the details of step 2 to step 4.
+In the following subsections, we will give the details of steps 2 to 4.
 
 %-------------------------------------------------------------------------
 \subsection{Silhouette Extraction}
 
+To extract silhouettes on the 3D model corresponding to each input image, we first detect the points on the 3D mesh whose normals are parallel to the image plane. Given the estimated perspective projection matrix for the image, we can also estimate the rotation matrix $R_{i}$ for the image. The view direction can then be estimated from the rotation matrix. Suppose the direction perpendicular to the frontal face is the $z$-axis, then for the $i$-th image, the view direction is $v_{i}=R_{i} \left[ 0  0  1 \right]^T$. 
 
-To extract silhouette on 3D model, first we detect the points on 3D mesh whose normal are parallel to the image plane. Given the estimated perspective projection matrix, we can estimate the rotation matrix $R_{i}$ for each image. The view direction then can be estimated from the rotation matrix. Suppose the direction perpendicular to the frontal face is z-axis, then for $i$-th image, view direction
-$v_{i}=R_{i} \ast \left[ 0; 0; 1 \right]$. 
-Find the silhouette candidate points on 3D model whose normals are perpendicular to the view direction, the cosine of the angle between view direction and normal should be near to zero, i.e, $\frac {|v_{i} \cdot n_{j|}} {\|v_{i} \| \cdot \|n_{j} \|} < \epsilon$, where $n_{j}$ is the normal of vertex $j$ on 3D mesh and $\epsilon$ is a small value near to zero.  
+Silhouette candidate points on the 3D model are those vertices whose normals are perpendicular to the view direction, that is, the cosine of the angle between the view direction and the vertex normal should be near zero, $\frac {|v_{i} \cdot n_{j|}} {\|v_{i} \| \cdot \|n_{j} \|} < \epsilon$, where $n_{j}$ is the normal of vertex $j$ on the 3D mesh and $\epsilon$ is a small value near zero. To avoid noise, we consider only those vertices as silhouette candidates whose sets of incident faces include faces that are front-facing and faces that are back-facing to the view direction. Among the silhouette candidates, those vertices that are occluded by other parts of the face, for example the nose, have no corresponding edge on the 2D image. Hence we also discard these points. Occlusions can easily be detected by ray tracing or rendering the mesh using z-buffering, for example. The points satisfying the above constraints are considered as silhouette candidates on the 3D model, which we denote as $X_{sil3D}$.
 
-To avoid noises, choose the points whose incident faces have faces that are front-facing to the view direction and faces that are back-facing to the view direction. Among the silhouette candidates, the points sheltered by the nose has no edge on the 2D image, so these points will be discarded. To guarantee proper extraction of silhouette from the images, only the "nonfrontal" images are used. From the rotation matrix, we can estimate the yaw, pitch and roll of the face pose for each image. Choose the images in which the yaw of the face is bigger than a threshold. The points satisfying the above constraints are considered as silhouette  candidates on 3D model, we denote it as $X_{sil3D}$.
+To guarantee proper extraction of silhouettes from the 2D input images, we use only the ``nonfrontal'' images. We estimate the yaw, pitch and roll of the face pose for each image from the rotation matrix, and we select only those images in which the yaw of the face is bigger than a threshold. 
 
 
 %------------------------------------------------------------------------
 \subsection{Build correspondence between 3D silhouette and 2D silhouette}
-
 
 Let $S_{i}$ denotes the silhouette candidates of 3D model for image $i$. Warp $S_{i}$ on image $i$.
 Warp the silhouette candidate $X_{sil3D}$ on the images and move the candidates to the nearest points on an edge in the image. From the edge of one image, for each silhouette candidates on the 3D face model  $X_{sil3D}^{i}$ , find the closest  edge points by minimizing the square distance between warped silhouette point and edge points, i.e.,

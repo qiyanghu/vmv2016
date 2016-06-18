@@ -180,23 +180,35 @@ $X$ can be solved in a linear system as:
 \end{equation} 
 
 
+
 %-------------------------------------------------------------------------
 \section{Experiment}
 \label{sec:results}
 
 In this section we present the visualization result of the improvement of our algorithm.
 
-\textbf{Dataset} We collect the photo of celebrities on the Internet. First we tried to use Google API to collect the photo by searching celebrities' name, but less than half of the result can be use for the experiment, since many of the returned images are  or are not related to the celebrity. So we collect the images on the websites that own specific gallery webpage for the celebrities, Mtime and Douban. And we write a python script to download images for different individuals. For the initial template used to reconstruct the model, we use the face model in \cite{Zhang04}. The 68 landmarks on images are detected using the approach in \cite{kazemi2014one} 
+\textbf{Dataset} We collect the photo of celebrities on the website. First we tried to use Google API to collect the photo by searching celebrities' name, but less than half of the result can be use for the experiment, since many of the returned images are not portrait or are related to the celebrity. So we collect the images on the websites that own specific webpage for the celebrities, Mtime and Douban. And we write a python script to download images for different individuals. For the initial template used to reconstruct the model, we use the face model in \cite{Zhang04}. The landmarks are detected using \cite{kazemi2014one}
 
-BruceWillis(737) Tom Cruise(895), Geoge Clooney(853),  Kevin Spacey(835), Edward Norton(757),  and James McAvoy(1129). The former number is the images used for extracting silhouette points, the latter number is the total amount of images for each celebrity.
+Extract silhouette points in a number of images of the dataset. Geoge Clooney(169/1152),  Kevin Spacey(85/468), Edward Norton(93/707), Tom Cruise(95/695) and James McAvoy(149/1038), WentworthMiller(106/737). The former number is the images used for extracting silhouette points, the latter number is the total amount of images for each celebrity.
 
-\textbf{Silhouette} We warp the silhouette vertex of 3D model on the images. The red points are the projected silhouette before we add silhouette constraint and the greee points are the silhouette after adding the silhouette constraint. 
+\textbf{Silhouette}
 \begin{figure}[htb]
   \centering
-
+  % the following command controls the width of the embedded PS file
+  % (relative to the width of the current column)
   \includegraphics[width=1\linewidth]{ite2}
-
-  \caption{\label{fig:itesil}
+  % replacing the above command with the one below will explicitly set
+  % the bounding box of the PS figure to the rectangle (xl,yl),(xh,yh).
+  % It will also prevent LaTeX from reading the PS file to determine
+  % the bounding box (i.e., it will speed up the compilation process)
+  % \includegraphics[width=1.5\linewidth, bb=39 696 126 756]{sampleFig}
+  %
+  %\parbox[t]{.9\columnwidth}{\relax
+   %        For all figures please keep in mind that you \textbf{must not}
+    %       use images with transparent background! 
+     %      }
+  %
+  \caption{\label{fig:firstExample}
            the warped silhouette in each iteration. Red: warped silhouette. Green: extracted 2D silhouette}
 \end{figure}
 
@@ -205,11 +217,16 @@ BruceWillis(737) Tom Cruise(895), Geoge Clooney(853),  Kevin Spacey(835), Edward
   \includegraphics[width=1\linewidth]{sil2}
   % \includegraphics[width=1.5\linewidth]{sil}
   %
-  \caption{\label{fig:sil}
+  %\parbox[t]{.9\columnwidth}{\relax
+   %        For all figures please keep in mind that you \textbf{must not}
+    %       use images with transparent background! 
+     %      }
+  %
+  \caption{\label{fig:firstExample}
            the warped silhouette before and after using silhouette constraint. Red: before using silhouette. Yellow: after adding silhouette constraint}
 \end{figure}
 
-Figure~\ref{fig:sil} plots the warped silhouette points on the images. We can see that the after adding silhouette constraint to the reconstruction step, the silhouette of the 3D mesh (yellow points) match better with the real silhouette.
+Fig.2 plots the warped silhouette points on the images. We can see that the after adding silhouette constraint to the reconstruction step, the silhouette of the 3D mesh (yellow points) match better with the real silhouette.
 
 From the result in Fig.3 we can see, compared with the previous method, our result has obvious improvement on the nose and the chin. Also the eyes in the profile. When the 3D model has good correspondence to the images, it helps the photometric stereo approach to estimate more accurate normals. 
 
@@ -238,8 +255,13 @@ these proceedings.
   % the following command controls the width of the embedded PS file
   % (relative to the width of the current column)
   \includegraphics[width=.9\linewidth]{all2}
-
-  \caption{\label{fig:allface}%
+  % replacing the above command with the one below will explicitly set
+  % the bounding box of the PS figure to the rectangle (xl,yl),(xh,yh).
+  % It will also prevent LaTeX from reading the PS file to determine
+  % the bounding box (i.e., it will speed up the compilation process)
+  % \includegraphics[width=.3\linewidth, bb=39 696 126 756]{sampleFig}
+  %
+  \caption{\label{fig:ex3}%
            For publications with color tables (i.e., publications not offering
            color throughout the paper) please \textbf{observe}: 
            for the printed version -- and ONLY for the printed

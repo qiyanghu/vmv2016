@@ -112,9 +112,10 @@ Note that on the boundary, the mean curvature formula degenerates into a 1D vers
 
 Combining the Laplacian constraints on the interior and the boundary, and including the 2D landmark constraints, the final mesh is reconstructed by minimizing the energy 
 %
-\begin{displaymath}
+\begin{align}
+\label{eq:reconstructionenergy}
 E=\|\mathcal{L}X - H^{k}n\|^2+\lambda_{b}\|\mathcal{L}_{b}X - \mathcal{L}X^{k}\|^2+  \lambda_{l}\sum_{i}{\|P_{i}D_{i}X-W_{i}\|^2} 
-\end{displaymath} 
+\end{align} 
 %
 Fixing the projection matrices $P_i$ makes this a linear least squares problem for $X$. It is solved iteratively, however, by updating the cotan weights to compute the mean curvatures $H$ after each step. Finally, Roth et al. \cite{Roth:2015:UFR} incorporate a heuristics to deal with shadowed regions.
 
@@ -147,27 +148,36 @@ In the following subsections, we will give the details of steps 2 to 4.
 %-------------------------------------------------------------------------
 \subsection{Silhouette Extraction}
 
-To extract silhouettes on the 3D model corresponding to each input image, we first detect the points on the 3D mesh whose normals are parallel to the image plane. Given the estimated perspective projection matrix for the image, we can also estimate the rotation matrix $R_{i}$ for the image. The view direction can then be estimated from the rotation matrix. Suppose the direction perpendicular to the frontal face is the $z$-axis, then for the $i$-th image, the view direction is $v_{i}=R_{i} \left[ 0  0  1 \right]^T$. 
+To extract silhouettes on the 3D model corresponding to each input image, we first detect the points on the 3D mesh whose normals are parallel to the image plane. Given the estimated perspective projection matrix for the image, we can also estimate the rotation matrix $R_{i}$ for the image. The view direction can then be estimated from the rotation matrix. Suppose the direction perpendicular to the frontal face is the $z$-axis, then for the $i$-th image, the view direction is $v_{i}=R_{i} \left[ 0,  0,  1 \right]^T$. 
 
 Silhouette candidate points on the 3D model are those vertices whose normals are perpendicular to the view direction, that is, the cosine of the angle between the view direction and the vertex normal should be near zero, $\frac {|v_{i} \cdot n_{j|}} {\|v_{i} \| \cdot \|n_{j} \|} < \epsilon$, where $n_{j}$ is the normal of vertex $j$ on the 3D mesh and $\epsilon$ is a small value near zero. To avoid noise, we consider only those vertices as silhouette candidates whose sets of incident faces include faces that are front-facing and faces that are back-facing to the view direction. Among the silhouette candidates, those vertices that are occluded by other parts of the face, for example the nose, have no corresponding edge on the 2D image. Hence we also discard these points. Occlusions can easily be detected by ray tracing or rendering the mesh using z-buffering, for example. The points satisfying the above constraints are considered as silhouette candidates on the 3D model, which we denote as $X_{sil3D}$.
 
-To guarantee proper extraction of silhouettes from the 2D input images, we use only the ``nonfrontal'' images. We estimate the yaw, pitch and roll of the face pose for each image from the rotation matrix, and we select only those images in which the yaw of the face is bigger than a threshold. 
+To guarantee proper extraction of silhouettes from the 2D input images, we use only the ``nonfrontal'' images. We estimate the yaw, pitch and roll of the face pose for each image from the rotation matrix, and we select only those images in which the yaw of the face is bigger than a threshold. We use a Canny edge detector \cite{Canny86} to identify candidate silhouette points in the 2D images.
 
 
 %------------------------------------------------------------------------
-\subsection{Build correspondence between 3D silhouette and 2D silhouette}
+\subsection{3D-2D Silhouette Correspondences}
+\label{sec:correspondences}
 
-Let $X_{sil3D}$ denotes the silhouette candidates of 3D model for image $i$. Warp the silhouette candidate $X_{sil3D}$ on the images and move the candidates to the nearest points on an edge in the image. The edge on the image is detected using Canny edge detector. ~\cite{Canny86} From the edge of one image, for each silhouette candidates on the 3D face model $X_{sil3D}^{i}$ , find the closest  edge points by minimizing the square distance between warped silhouette point and edge points, i.e.,
+Next we describe how we establish correspondences between 3D silhouette points on the mesh, and silhouette candidates on the 2D images. Let $X_{sil3D}^i$ denote the silhouette candidates on the 3D mesh for image $i$. We project these points onto the corresponding 2D image using the current estimation of the projection and rotations matrices. Then, for each 3D silhouette point projected onto the image, we establish correspondence to the closes 2D silhouette candidate.
+
+%The edge on the image is detected using Canny edge detector. ~\cite{Canny86} From the edge of one image, for each silhouette candidates on the 3D face model $X_{sil3D}^{i}$ , find the closest  edge points by minimizing the square distance between warped silhouette point and edge points, i.e.,
+More precisely, the $k$-th 3D silhouette point $X_{sil3D,k}^{i}$ for image $i$ corresponds to 2D silhouette candidate $X_{sil2D,j}^i$, where 
+%
 \begin{displaymath}
-\arg{\min}\underset{X_{sil2D}} \|X_{sil3D}^{i} - X_{sil2D}^i\|^2 
+j = \argmin_l \|P_i X_{sil3D,k}^{i} - X_{sil2D,l}^i\|^2.
 \end{displaymath} 
+%
+Finally, we store the subset of 2D silhouette candidates that are selected using the above procedure in image $i$ in a vector $S_i$.
 
-Since the reconstructed model is close to the real shape of the individual, the projected silhouette should not be too far away from the correspongding edge. We set a threshold for the square distance, if the distance is larger than the threshold, that point will be considered as outlier and rejected. This can also reduce the effect by the extreme expession.
+Since the reconstructed model is close to the real shape of the individual, the projected silhouette $P_i X_{sil3D,k}^{i}$ should not be too far away from the corresponding edge. In addition, we set a threshold for the square distance, and if the distance is larger than the threshold, that point will be considered as outlier and rejected. This can also reduce the artifacts caused by images containing extreme facial expressions.
 
-For each image, we obtain the silhouette point sets and the corresponding vertex on 3D mesh. Then for each silhouette point on 3D model, we can know it's related to which images. Let $X_{j}$ denotes the silhouette vertex $j$, $I_{j}$ denotes the image set containing $X_{j}$ . $I_{ij}$ denotes image $i$ containing silhouette points correponding to $X_{j}$. 
+%For each image, we obtain the silhouette point sets and the corresponding vertex on 3D mesh. Then for each silhouette point on 3D model, we can know it's related to which images. Let $X_{j}$ denotes the silhouette vertex $j$, $I_{j}$ denotes the image set containing $X_{j}$ . $I_{ij}$ denotes image $i$ containing silhouette points correponding to $X_{j}$. 
 
 
-In our apporach, the face model is reconstructed from the average normals of images. The silhouette points that only appear in few images may lead to pointy region on 3D mesh. Especially for the chin, the extreme expression such as big mouth, may result in a bad estimation of the shape $X$. For example, we extract silhouette on a laughing face, the curve of the laughing cheek and chin is much different with the neural face, then the edge of the face in image will have bad correspondence with the 3D model. If these corresponded vertex $X_{c}$ only have corresponde with one extreme expressin image, then $X_{c}$ will get bad estimation and lead to a noise on the 3D mesh. So the slihouette points showing in few images will be discarded to decrease the influence of noise in the slihouette extraction and the various expressions. 
+In our approach, the face model is reconstructed from the average normals of all images. The silhouette points that only appear in few images, however, may lead to pointy regions on the 3D mesh. Especially for the chin, extreme facial expressions such as an open mouth, may result in a bad estimation of the shape $X$. For example, if we extract silhouettes on a laughing face, the curve of the laughing cheek and chin is much different from the neural face. In this case the edge of the face in the image will have a bad correspondence with the 3D model. 
+%If these corresponded vertex $X_{c}$ only have corresponde with one extreme expressin image, then $X_{c}$ will get bad estimation and lead to a noise on the 3D mesh. 
+Hence we discard silhouette points appearing only in few images to decrease the influence of noise in the silhouette extraction and the various expressions. 
 
 
 % All text with the exception of the abstract must be in a two-column format.
@@ -178,24 +188,25 @@ In our apporach, the face model is reconstructed from the average normals of ima
 % between them.
 
 %-------------------------------------------------------------------------
-\subsection{Reconstruction using silhouette points}
+\subsection{Reconstruction using Silhouette Constraints}
 
-Given the silhouette points on 3D model and the corresponding sihouette in 2D images, we add the silhouette constraint to the energy mentioned in [1] and we can get:
+Given the silhouette points on the 3D model and the corresponding silhouettes in 2D images, we add the silhouette constraints to the original energy from Equation~\ref{eq:reconstructionenergy} and obtain an extended energy
+%
 \begin{equation}
 \begin{split}
-E&=\|LX_{new} - H^{k}n\|^2+ \lambda_{l}\sum_{i}{\|P_{i}D_{i}X_{new}-W_{i}\|^2} \\
-&+\lambda_{b}\|L_{b}X_{new} - LX\|^2+\lambda_{s}\sum_{j\in V_{sil}} \sum_{s\in I_{sil}}{\|P_{sj}D_{sj}X_{new}-S_{sj}\|^2}
+E&=\|LX - H^{k}n\|^2+ \lambda_{l}\sum_{i}{\|P_{i}D_{i}X-W_{i}\|^2} \\
+&+\lambda_{b}\|L_{b}X - LX\|^2+\lambda_{s} \sum_{s\in I_{sil}}{\|P_{s}\Delta_{s}X-S_{s}\|^2}
 \end{split}
 \end{equation} 
-
-where $I_{sil}$ is the image set containing silhouette points, $V_{sil}$ is all the silhouette vertex on 3D model. $P_{sj}$  is weakly prospective projected matrix between  silhouette vertices $X_{j}$ and 2D silhouette points in $s$ -th images, $D_{sj}$  is a diagonal matrix selecting out the silhouette vertex that have a correspondence in image $s$, . $\lambda_{s}$ is the silhouette constraint weight.
-
-$X$ can be solved in a linear system as: 
-
+%
+where $I_{sil}$ is the of indices of the images containing silhouette points, $\Delta_{s}$ is a diagonal matrix selecting out the 3D vertices appearing on the silhouette in image $s$, and $S_s$ stores the corresponding 2D silhouette points in image $s$ as described in Section~\ref{sec:correspondences}. Finally, $\lambda_{s}$ is a silhouette constraint weight.
+%where $I_{sil}$ is the set of indices of the images containing silhouette points, $P_{sj}$  is weakly prospective projected matrix between  silhouette vertices $X_{j}$ and 2D silhouette points in $s$ -th images, $D_{sj}$  is a diagonal matrix selecting out the silhouette vertex that have a correspondence in image $s$, . $\lambda_{s}$ is the silhouette constraint weight.
+Keeping the projection matrices $P_i$ (and $P_s$) fixed, we find $X$ by solving the linear system
+%
 \begin{equation}
 \begin{split}
-&(\mathcal{L}^2+\lambda_{b}\mathcal{L}_b^2 +\lambda_{l}\sum_{i}{D_{i}P_{i}^{T}P_{i}D_{i}}+\lambda_{s}\sum_{j} \sum_{s}{D_{sj}P_{sj}^{T}P_{sj}D_{sj}})X\\
-&=\mathcal{L}H+\lambda_{b}\mathcal{L}_b^2X+\lambda_{l}\sum_{i}{(P_{i}^T)W_{i}}+\lambda_{s}\sum_{j}\sum_{s}{P_{sj}^{T}D_{sj}S_{sj}}
+&(\mathcal{L}^2+\lambda_{b}\mathcal{L}_b^2 +\lambda_{l}\sum_{i}{D_{i}P_{i}^{T}P_{i}D_{i}}+\lambda_{s} \sum_{s \in I_{sil}}{\Delta_{s}P_{s}^{T}P_{s}\Delta_{s}})X\\
+&=\mathcal{L}H+\lambda_{b}\mathcal{L}_b^2X+\lambda_{l}\sum_{i}{(P_{i}^T)W_{i}}+\lambda_{s}\sum_{s \in I_{sil}}{P_{s}^{T}\Delta_{s}S_{s}}.
 \end{split}
 \end{equation} 
 

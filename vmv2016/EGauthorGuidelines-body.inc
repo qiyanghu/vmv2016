@@ -78,63 +78,83 @@ The rest of this paper is organized as follows: We first review related work in 
 \section{Unconstrained Face Reconstruction}
 \label{sec:unconstrainedfacereconstruction}
 
-First, in \cite{Roth15} they compute 2D landmarks for all images using the approach in [5]. With the 2D landmarks, Warp the 3D model on the images by project 3D landmarks on 2D landmarks on image. Estimate the weak prospecive projection matrix $P_{i}$ for each image. Deform the 3D template using laplacian surface editing and adapt for the lanmark constraints until convergence. Update the vertex verctor $X$ by minimizing the energy function:
-\begin{displaymath}
-E_{warp}(X,P_{i})=\|\mathcal{L}X - \mathcal{L}X_{0}\|^2+\lambda_{l}\sum_{i}{\|P_{i}D_{i}X-W_{i}\|^2} 
-\end{displaymath} 
+Unconstrained 3D face reconstruction \cite{Roth15} takes as its input  a collection of facial photographs of an individual under uncrontrolled illumination and various poses and facial expresssions, and it reconstructs a full 3D reconstruction of the individual's face represented by a mesh. The method proceeds by first detecting 2D landmarks on all input images using the approach by Yan et al. \cite{Yan:2013:LCM}. Next, a 3D template mesh is warped and projected to 2D to match the 2D landmarks. This leads to an initial, rough 3D reconstruction of the face, and a weak perspective projection matrix for each input image. Then they improve the 3D reconstruction by determining surface normals using a photometric stereo approach, and lastly they perform 3D reconstruction by refining the rough mesh to match the photometric normals. We briefly review the main components of this approach.
 
-where $\mathcal{L}$ is a discretization of the Laplace-Beltrami operator, with the weight $\mathcal{L}_{ij}=\frac{1}{2}(cot\alpha_{ij}+cot\beta_{ij})$ where $\alpha_{ij}$ and $\beta_{ij}$ are the opposite angles of edge if in the two incident triangles. $D_{i}$ is the selection matrix picking out the landmarks that have a correspondence in image $i$, it's a diagonal matrix with 1 on the diagonal for the vertices corresponding to such a landmark and 0 everywhere else.
- The deformed 3D template will be used as the initial template for the following steps.   
+\paragraph*{Template Warping} Given the 2D landmarks, denoted by a vector $W_i$, for all images $i$, and a template mesh with $p$ vertices, denoted by a $3p$ dimensional vector $X_0$, the goal is to find a warped mesh $X$ and weak projection matrices $P_i$, such that the landmarks on $X$ projected to 2D match the 2D landmarks $W_i$. The key idea is to use Laplacian surface editing \cite{Sorkine:2004:LSE} to perform mesh deformation. This leads to a minimization problem
+%
+\begin{align}
+\label{eq:warptemplate}
+E_{warp}(X,P_{i})=\|\mathcal{L}X - \mathcal{L}X_{0}\|^2+\lambda_{l}\sum_{i}{\|P_{i}D_{i}X-W_{i}\|^2},
+\end{align} 
+%
+which expresses the intuition that the mesh Laplacian \cite{Meyer2003} $\mathcal{L}X$ of the deformed mesh should stay close to the mesh Laplacian of the template $\mathcal{L}X_{0}$. In addition, $D_{i}$ is a selection matrix picking out the landmarks that have a correspondence in image $i$, that is, it is a diagonal matrix with $1$ on the diagonal for the vertices corresponding to a landmark and $0$ everywhere else. 
 
-Then they use photometric stereo technique to estimate normals. Refer to approach in \cite{Ira11}, store each warped image reflectance intensity in a matrix $M$, where each row represents the pixels in one image. For the non-frontal images, some vertices are not visible. They set the intensity of the non-visible vertices as zeros and use matrix completion \cite{Lin09} to fulfill the missing value to obtain the full $M$. Factorize the matrix $M$ using SVD and take the rank-4 approximation to estimate the shape $S$ and light $L$, where $S$ contains the normals $n$ and albedo $\rho$, and $L$ contains the light directoin. Select the images that are modeled well by the rank-4 approximation, i.e.,$\|M-LS\|<\epsilon$.  Since the factorization is not unique, it leads to one ambiguity in $S$ and $L$, i.e., $LS=(\tilde{L}A^{-1})(A\tilde{S})$. Recover the ambiguity by solving for $\arg{\min}\underset{A}\,\|S^{t} - A\tilde{S}\|^2 $, where $S^{t}$ is the shape vector of the template. 
+Equation~\ref{eq:warptemplate} is solved iteratively. First, the projection matrices are obtained by fixing the template and solving for $P_i$, which is a linear least squares problem. Then, the $P_i$ are fixed and the deformed mesh $X$ is obtained in an iterative approach. This is necessary because the mesh Laplacians $\mathcal{L}X$ and $\mathcal{L}X_0$ are not rotation invariant. Hence, after each iteration step the mesh Laplacian $\mathcal{L}X_0$ of the template is rotated to align with the Laplacian $\mathcal{L}X$ obtained in the previous step.
 
-Given the normal vectors, they reconstruct the shape $X$ from the normals $n$ through mean curvature $H$ by minimizing $\|\mathcal{L}X-Hn\|^2$, where $H$ is the mean curvature. The mean curvature $H$ is estimated as 
-$H_{i}=\frac{1}{4A_{i}} \sum_{j\in N(i)}{(cot\alpha_{ij}+cot\beta_{ij}))e_{ij}\cdot(n_{i}-n_{j})}$, where $N(i)$ is the set of incident neighboring vertices of vertex $i$, $A_{i}$ is the sum of the triangles' areas incident to $i$, $e_{ij}$ is the edge from $i$ to $j$. The cotan weights are the same as those in the Laplacian operator $\mathcal{L}$. Update the cotan weights in each global iteration.
+%First, in \cite{Roth15} they compute 2D landmarks for all images using the approach in [5]. With the 2D landmarks, Warp the 3D model on the images by project 3D landmarks on 2D landmarks on image. Estimate the weak prospecive projection matrix $P_{i}$ for each image. Deform the 3D template using laplacian surface editing and adapt for the lanmark constraints until convergence. Update the vertex verctor $X$ by minimizing the energy function:
+%\begin{displaymath}
+%E_{warp}(X,P_{i})=\|\mathcal{L}X - \mathcal{L}X_{0}\|^2+\lambda_{l}\sum_{i}{\|P_{i}D_{i}X-W_{i}\|^2} 
+%\end{displaymath} 
+%
+%where $\mathcal{L}$ is a discretization of the Laplace-Beltrami operator, with the weight $\mathcal{L}_{ij}=\frac{1}{2}(cot\alpha_{ij}+cot\beta_{ij})$ where $\alpha_{ij}$ and $\beta_{ij}$ are the opposite angles of edge if in the two incident triangles. $D_{i}$ is the selection matrix picking out the landmarks that have a correspondence in image $i$, it's a diagonal matrix with 1 on the diagonal for the vertices corresponding to such a landmark and 0 everywhere else.
+ %The deformed 3D template will be used as the initial template for the following steps.   
 
-On the boundary, the mean curvature formula degenerates into a 1D version, the shape vectore $X$ is updated by minimizing 
-$\|\mathcal{L}_{b}X- \mathcal{K}b\|^2$, where $\mathcal{L}_{b,ij}=\frac{1}{e_{ij}}$ and $\mathcal{K}$ is the geodesic curvature along the boundary and $b$ is the cross product between the surface normal and the boundary tangent.
+\paragraph*{Photometric Normals} Next, a photometric stereo technique \cite{Ira11} is used to estimate per vertex normals on the deformed template. First, an image reflectance intensity matrix $M \in \mathbb{R}^{n \times p}$ is constructed, where $n$ is the number of images and $p$ the number of mesh vertices. Each element $i,j$ stores the reflectance intensity of the pixel in image $i$ that corresponds to vertex $j$ on the mesh, where correspondence is established by projecting the mesh onto image $i$ using the projection matrix $P_i$. For non-frontal images some vertices are not visible, which leads to undefined matrix entries that are filled using matrix completion \cite{Lin09}. Matrix $M$ is then factorized using SVD, and the rank-4 approximation estimates a light matrix $L \in \mathbb{R}^{n \times 4}$ and shape matrix $S \in \mathbb{4 \times p}$, which represents the normals and albedos at each mesh vertex. 
 
-Finally, the mesh is deformed by minimizing the energy as following:
+The bas-relief ambiguity, that is, $LS=(\tilde{L}A^{-1})(A\tilde{S})$ with ambiguous factors $\tilde{L}$ and $\tilde{A}$ and any invertible $A \in \mathbb{R}^{4 \times 4}$, is resolved using the approach by Kemelmacher-Shlizerman and Seitz \cite{Ira11}. First, the images that are modeled well by the rank-4 approximation are selected, that is, $\|M-LS\|<\epsilon$. The the ambiguity is recovered by solving for $\arg{\min}\underset{A}\,\|S^{t} - A\tilde{S}\|^2 $, where $S^{t}$ is the shape vector of the template. 
+
+%Refer to approach in \cite{Ira11}, store each warped image reflectance intensity in a matrix $M$, where each row represents the pixels in one image. For the non-frontal images, some vertices are not visible. They set the intensity of the non-visible vertices as zeros and use matrix completion \cite{Lin09} to fulfill the missing value to obtain the full $M$. Factorize the matrix $M$ using SVD and take the rank-4 approximation to estimate the shape $S$ and light $L$, where $S$ contains the normals $n$ and albedo $\rho$, and $L$ contains the light directoin. Select the images that are modeled well by the rank-4 approximation, i.e.,$\|M-LS\|<\epsilon$.  Since the factorization is not unique, it leads to one ambiguity in $S$ and $L$, i.e., $LS=(\tilde{L}A^{-1})(A\tilde{S})$. Recover the ambiguity by solving for $\arg{\min}\underset{A}\,\|S^{t} - A\tilde{S}\|^2 $, where $S^{t}$ is the shape vector of the template. 
+
+\paragraph*{Final Reconstruction} To leverage the vertex normals for final 3D reconstruction, the idea is to exploit the fact that the vertex Laplacians correspond to the vertex normals scaled by the mean curvature at each vertex \cite{Meyer2003}. Therefore, the shape (that is, vertex positions) $X$ can be reconstructed from the normals $n$ by minimizing $ \|\mathcal{L}X-Hn\|^2$, where $H$ is a diagonal matrix storing the mean curvatures at each vertex. The mean curvature $H_i$ at vertex $i$ can be estimated based on the vertex normals as $H_{i}=\frac{1}{4A_{i}} \sum_{j\in N(i)}{(cot\alpha_{ij}+cot\beta_{ij}))e_{ij}\cdot(n_{i}-n_{j})}$, where $N(i)$ is the set of incident neighboring vertices of vertex $i$, $A_{i}$ is the sum of the triangles' areas incident to $i$, $e_{ij}$ is the edge from $i$ to $j$ \cite{Meyer2003}. 
+
+Note that on the boundary, the mean curvature formula degenerates into a 1D version. This leads to separate constraints on the boundaries formulated as $\|\mathcal{L}_{b}X- \mathcal{K}b\|^2$, where $\mathcal{L}_{b,ij}=\frac{1}{e_{ij}}$, $\mathcal{K}$ is the geodesic curvature along the boundary, and $b$ is the cross product between the surface normal and the boundary tangent.
+
+Combining the Laplacian constraints on the interior and the boundary, and including the 2D landmark constraints, the final mesh is reconstructed by minimizing the energy 
+%
 \begin{displaymath}
 E=\|\mathcal{L}X - H^{k}n\|^2+\lambda_{b}\|\mathcal{L}_{b}X - \mathcal{L}X^{k}\|^2+  \lambda_{l}\sum_{i}{\|P_{i}D_{i}X-W_{i}\|^2} 
 \end{displaymath} 
+%
+Fixing the projection matrices $P_i$ makes this a linear least squares problem for $X$. It is solved iteratively, however, by updating the cotan weights to compute the mean curvatures $H$ after each step. Finally, Roth et al. \cite{Roth:2015:UFR} incorporate a heuristics to deal with shadowed regions.
 
-From the results shown in \cite{Roth15}, we can see that the frontal face of the 3D reconstructed model fits to the individual, but the profile doesn't fit well, especially the nose and chin.The nose is supposed to be taller and the chin should be more curved. So we propose to use silhouette of the faces to refine the reconstructed face shape.
+While this approach leads to impressive results, we can see that the reconstructed profile often does not fit well with the input images, especially around the nose and chin. For example in Figure~\ref{fig:teaser} the nose is supposed to be taller and the chin should be more curved. We address these limitations by proposing novel silhouette constraints to refine the reconstructed face shape, as discussed next.
 
 %-------------------------------------------------------------------------
-\section{Silhouette Constraints}
+\section{Including Silhouette Constraints}
 \label{sec:silhouetteconstraints}
 
-Continue from the previous work, we refine the face model to make the shape fit better with the real image. We extract the silhouettes on 3D model and in each 2D images and build correpondence between the silhouette vertex on face model and the silhouette points in images. Then add silhouette constraint in the mesh deformation.
+The main idea in our work is to include additional silhouette constraints to obtain a better match between the 3D shape and the input images, and improve the 3D reconstruction. We achieve this by automatically extracting silhouettes both in the 2D images, and on the 3D model given the projection onto each image. We then build correspondences between the silhouette points in each image and on the 3D model (under the projection to each image), and finally incorporate these silhouette constraints in the final 3D reconstruction step. 
+%
+%Continue from the previous work, we refine the face model to make the shape fit better with the real image. We extract the silhouettes on 3D model and in each 2D images and build correpondence between the silhouette vertex on face model and the silhouette points in images. Then add silhouette constraint in the mesh deformation.
+%
+The main steps of our approach proceed as follows:
 
-The main step can be described as following:
+\begin{enumerate}
+\item Reconstruct a rough 3D model by deforming a template and estimating initial perspective projection and rotation matrices to match 2D landmarks, as in the method by Roth et al.~\cite{Roth15}. 
 
-1. Reconstruct a 3D model using the method in \cite{Roth15}. 
+\item Use photometric stereo to estimate per-vertex normals and mean curvatures as proposed by Roth et al.~\cite{Roth15}.
 
-2. Use photometric stereo to estimate the normal and compute the mean curvature using the propsed formula in \cite{Roth15}.
+\item Using the current projection and rotation matrices, extract 3D and 2D silhouette candidates for each image. Build up correspondences between 2D and 3D silhouette candidates. Discard silhouette candidate points that only show up in few images.
 
-3. Estimate perspective projection matrix and rotation matrix. Extract 3D and 2D silhouette candidates for each image. Build up correspondence between 2D and 3D silhouette candidates. Discard the silhouette candidate points only show in few images.
+\item Reconstruct the face model including the silhouette constraints. Re-estimate the perspective projection and rotation matrices based on the updated reconstruction. 
 
-4. Reconstruct face model with silhouette constraint.
+\item Go back to step 2 until convergence. 
+\end{enumerate}
 
-5. Go back to step 2 until convergence. 
-
-In the following subsection, we will give the details of step 2 to step 4.
+In the following subsections, we will give the details of steps 2 to 4.
 
 %-------------------------------------------------------------------------
 \subsection{Silhouette Extraction}
 
+To extract silhouettes on the 3D model corresponding to each input image, we first detect the points on the 3D mesh whose normals are parallel to the image plane. Given the estimated perspective projection matrix for the image, we can also estimate the rotation matrix $R_{i}$ for the image. The view direction can then be estimated from the rotation matrix. Suppose the direction perpendicular to the frontal face is the $z$-axis, then for the $i$-th image, the view direction is $v_{i}=R_{i} \left[ 0  0  1 \right]^T$. 
 
-To extract silhouette on 3D model, first we detect the points on 3D mesh whose normal are parallel to the image plane. Given the estimated perspective projection matrix, we can estimate the rotation matrix $R_{i}$ for each image. The view direction then can be estimated from the rotation matrix. Suppose the direction perpendicular to the frontal face is z-axis, then for $i$-th image, view direction
-$v_{i}=R_{i} \ast \left[ 0; 0; 1 \right]$. 
-Find the silhouette candidate points on 3D model whose normals are perpendicular to the view direction, the cosine of the angle between view direction and normal should be near to zero, i.e, $\frac {|v_{i} \cdot n_{j|}} {\|v_{i} \| \cdot \|n_{j} \|} < \epsilon$, where $n_{j}$ is the normal of vertex $j$ on 3D mesh and $\epsilon$ is a small value near to zero.  
+Silhouette candidate points on the 3D model are those vertices whose normals are perpendicular to the view direction, that is, the cosine of the angle between the view direction and the vertex normal should be near zero, $\frac {|v_{i} \cdot n_{j|}} {\|v_{i} \| \cdot \|n_{j} \|} < \epsilon$, where $n_{j}$ is the normal of vertex $j$ on the 3D mesh and $\epsilon$ is a small value near zero. To avoid noise, we consider only those vertices as silhouette candidates whose sets of incident faces include faces that are front-facing and faces that are back-facing to the view direction. Among the silhouette candidates, those vertices that are occluded by other parts of the face, for example the nose, have no corresponding edge on the 2D image. Hence we also discard these points. Occlusions can easily be detected by ray tracing or rendering the mesh using z-buffering, for example. The points satisfying the above constraints are considered as silhouette candidates on the 3D model, which we denote as $X_{sil3D}$.
 
-To avoid noises, choose the points whose incident faces have faces that are front-facing to the view direction and faces that are back-facing to the view direction. Among the silhouette candidates, the points sheltered by the nose has no edge on the 2D image, so these points will be discarded. To guarantee proper extraction of silhouette from the images, only the "nonfrontal" images are used. From the rotation matrix, we can estimate the yaw, pitch and roll of the face pose for each image. Choose the images in which the yaw of the face is bigger than a threshold. The points satisfying the above constraints are considered as silhouette  candidates on 3D model, we denote it as $X_{sil3D}$.
+To guarantee proper extraction of silhouettes from the 2D input images, we use only the ``nonfrontal'' images. We estimate the yaw, pitch and roll of the face pose for each image from the rotation matrix, and we select only those images in which the yaw of the face is bigger than a threshold. 
 
 
 %------------------------------------------------------------------------
 \subsection{Build correspondence between 3D silhouette and 2D silhouette}
-
 
 Let $S_{i}$ denotes the silhouette candidates of 3D model for image $i$. Warp $S_{i}$ on image $i$.
 Warp the silhouette candidate $X_{sil3D}$ on the images and move the candidates to the nearest points on an edge in the image. From the edge of one image, for each silhouette candidates on the 3D face model  $X_{sil3D}^{i}$ , find the closest  edge points by minimizing the square distance between warped silhouette point and edge points, i.e.,

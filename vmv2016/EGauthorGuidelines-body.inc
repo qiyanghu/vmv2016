@@ -37,7 +37,7 @@
 \begin{document}
 
 \teaser{
-  \includegraphics[width=\linewidth]{figures/teaser.pdf}
+  \includegraphics[width=\linewidth]{figures/teaser.png}
   \centering
    \caption{We introduce silhouette constraints to improve the quality of unconstrained 3D face reconstruction. Here, we show a comparison between the state of the art approach by Roth et al. \cite{Roth:2015:UFR} and our technique. Note how our approach is more faithful to the silhouettes of the input images, especially around the nose region on the right.}
  \label{fig:teaser}
@@ -165,9 +165,10 @@ Next we describe how we establish correspondences between 3D silhouette points o
 More precisely, the $k$-th 3D silhouette point $X_{sil3D,k}^{i}$ for image $i$ corresponds to 2D silhouette candidate $X_{sil2D,j}^i$, where 
 %
 \begin{displaymath}
-j = \argmin_l \|P_i X_{sil3D,k}^{i} - X_{sil2D,l}^i\|^2.
+j = \arg{\min}_{l} \|P_{i} X_{sil3D,k}^{i} - X_{sil2D,l}^{i}\|^2.
 \end{displaymath} 
 %
+
 Finally, we store the subset of 2D silhouette candidates that are selected using the above procedure in image $i$ in a vector $S_i$.
 
 Since the reconstructed model is close to the real shape of the individual, the projected silhouette $P_i X_{sil3D,k}^{i}$ should not be too far away from the corresponding edge. In addition, we set a threshold for the square distance, and if the distance is larger than the threshold, that point will be considered as outlier and rejected. This can also reduce the artifacts caused by images containing extreme facial expressions.
@@ -218,16 +219,18 @@ Keeping the projection matrices $P_i$ (and $P_s$) fixed, we find $X$ by solving 
 
 In this section we present the visualization result of the improvement of our algorithm.
 
-\textbf{Dataset} We collect the photo of celebrities on the website. First we tried to use Google API to collect the photo by searching celebrities' name, but less than half of the result can be use for the experiment, since many of the returned images are not portrait or are related to the celebrity. So we collect the images on the websites that own specific webpage for the celebrities, Mtime and Douban. And we write a python script to download images for different individuals. For the initial template used to reconstruct the model, we use the face model in \cite{Zhang04}. The landmarks are detected using \cite{kazemi2014one}
+\textbf{Dataset} We collect the photo of celebrities on the website. First we tried to use Google API to collect the photo by searching celebrities' name, but less than half of the result can be use for the experiment, since many of the returned images are not portrait or are related to the celebrity. So we collect the images on the websites that own specific webpage for the celebrities, Mtime and Douban. And we write a python script to download images for different individuals. For the initial template used to reconstruct the model, we use the face model in \cite{Zhang04}. The landmarks are detected using the method in \cite{kazemi2014one}.
 
-Extract silhouette points in a number of images of the dataset. Geoge Clooney(169/1152),  Kevin Spacey(85/468), Edward Norton(93/707), Tom Cruise(95/695) and James McAvoy(149/1038), WentworthMiller(106/737). The former number is the images used for extracting silhouette points, the latter number is the total amount of images for each celebrity.
+We reconstruct the face of the celebrities, Geoge Clooney(1152 photos),  Bruce Willis(835), Edward Norton(707), Tom Cruise(695) and James McAvoy(1138), Colin Firth(862). The photos are all from internet. We use opencv to crop the image to keep the face. We don't scale the image size, the resolution is the same as the downloaded image.  The photo are completed unconstrained. Figure~\ref{fig:all} shows the comparison of our result and the result in \cite{Roth15}. In the profiles, we can see that our results have obvious improvement on the nose and chin, as well as the better reconstruction on eyes. The silhouette constraint builds better coorespondence between 3D mesh and images, which helps to estimate photometric normals closer to the geometry.
 
-\textbf{Silhouette}
+\textbf{Silhouette} We visualize the silhouette on mesh by warping the points on images. Figure~\ref{fig:sil_all} plots the warped silhouette points on the images. Compared with silhouette in the previous method (red points), after adding silhouette constraint to the reconstruction step, the silhouette (Green points) matches better with the real silhouette.
+
+
 \begin{figure}[htb]
   \centering
   % the following command controls the width of the embedded PS file
   % (relative to the width of the current column)
-  \includegraphics[width=1\linewidth]{ite2}
+  \includegraphics[width=1\linewidth]{figures/ite_th.jpg}
   % replacing the above command with the one below will explicitly set
   % the bounding box of the PS figure to the rectangle (xl,yl),(xh,yh).
   % It will also prevent LaTeX from reading the PS file to determine
@@ -240,12 +243,12 @@ Extract silhouette points in a number of images of the dataset. Geoge Clooney(16
      %      }
   %
   \caption{\label{fig:firstExample}
-           the warped silhouette in each iteration. Red: warped silhouette. Green: extracted 2D silhouette}
+           the warped silhouette in each iteration. Red: warped silhouette. Green: extracted silhouette in image.}
 \end{figure}
 
 \begin{figure}[htb]
   \centering
-  \includegraphics[width=1\linewidth]{sil2}
+  \includegraphics[width=1\linewidth]{figures/sil_all3.jpg}
   % \includegraphics[width=1.5\linewidth]{sil}
   %
   %\parbox[t]{.9\columnwidth}{\relax
@@ -253,21 +256,44 @@ Extract silhouette points in a number of images of the dataset. Geoge Clooney(16
     %       use images with transparent background! 
      %      }
   %
-  \caption{\label{fig:firstExample}
-           the warped silhouette before and after using silhouette constraint. Red: before using silhouette. Yellow: after adding silhouette constraint}
+  \caption{\label{fig:sil_all}
+           the warped silhouette before and after using silhouette constraint. Red: before adding silhouette constraint. Green: after adding silhouette constraint}
 \end{figure}
 
-Fig.2 plots the warped silhouette points on the images. We can see that the after adding silhouette constraint to the reconstruction step, the silhouette of the 3D mesh (yellow points) match better with the real silhouette.
+\textbf{Numerical comparison} To numerically compare the result of different methods, we compute the shortest distance between the reconstructed mesh and ground truth. We align the reconstructed face with the ground truth using the landmarks on the two mesh, then compute the euclidean distance from each vertex on the ground truth to the closet point on the reconstructed mesh and normalize the distance. Figure~\ref{fig:groundtruth} shows the coloring visulization of the distance. Red vertex corresponde to big distance on the ground truth, and green represents small distance. Our result matches better to the ground truth especially on the nose. 
 
-From the result in Fig.3 we can see, compared with the previous method, our result has obvious improvement on the nose and the chin. Also the eyes in the profile. When the 3D model has good correspondence to the images, it helps the photometric stereo approach to estimate more accurate normals. 
+\begin{figure}[htb]
+  \centering
+  % the following command controls the width of the embedded PS file
+  % (relative to the width of the current column)
+  \includegraphics[width=1\linewidth]{figures/groundtruth.png}
+  % replacing the above command with the one below will explicitly set
+  % the bounding box of the PS figure to the rectangle (xl,yl),(xh,yh).
+  % It will also prevent LaTeX from reading the PS file to determine
+  % the bounding box (i.e., it will speed up the compilation process)
+  % \includegraphics[width=1.5\linewidth, bb=39 696 126 756]{sampleFig}
+  %
+  %\parbox[t]{.9\columnwidth}{\relax
+   %        For all figures please keep in mind that you \textbf{must not}
+    %       use images with transparent background! 
+     %      }
+  %
+  \caption{\label{fig:groundtruth}
+           Distance visulization between the ground truth and reconstructed face. From red to green represents augmented distance.}
+\end{figure}
+
+
+
+From the result in Figure~\ref{fig:all} we can see, compared with the previous method, our result has obvious improvement on the nose and the chin, as well as the eyes. In each iteration, the mesh is closer and closer to the real geometry, then the 3D face has better correspondence to images. A good correspondence is vital to create the reflectance intensity matrix $M$. The normals to reconstruct face is mainly from photometric stereo approach. Except the nose and chin, the silhouette constraint can improve the whole face quality.
 
 
 %-------------------------------------------------------------------------
 \section{Conclusions}
 \label{sec:conclusions}
 
-Please direct any questions to the production editor in charge of
-these proceedings.
+We propose a method with silhouette constraints to improve the quality 3D face reconstruction. 
+
+
 
 %-------------------------------------------------------------------------
 
@@ -285,18 +311,15 @@ these proceedings.
   %\mbox{} \hfill
   % the following command controls the width of the embedded PS file
   % (relative to the width of the current column)
-  \includegraphics[width=.9\linewidth]{all2}
+  \includegraphics[width=.9\linewidth]{figures/all3.png}
   % replacing the above command with the one below will explicitly set
   % the bounding box of the PS figure to the rectangle (xl,yl),(xh,yh).
   % It will also prevent LaTeX from reading the PS file to determine
   % the bounding box (i.e., it will speed up the compilation process)
   % \includegraphics[width=.3\linewidth, bb=39 696 126 756]{sampleFig}
   %
-  \caption{\label{fig:ex3}%
-           For publications with color tables (i.e., publications not offering
-           color throughout the paper) please \textbf{observe}: 
-           for the printed version -- and ONLY for the printed
-           version -- color figures have to be placed in the last page.
+  \caption{\label{fig:all}%
+           Comparison result of different individual between \cite{Roth15} and our approach. In our result, the nose and chin fit better to the real image. 
            \newline
   }
 \end{figure*}

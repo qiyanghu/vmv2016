@@ -266,7 +266,7 @@ We reconstructed 3D face models of various celebrities, including George Clooney
   \centering
   % the following command controls the width of the embedded PS file
   % (relative to the width of the current column)
-  \includegraphics[width=1\linewidth]{figures/groundtruth.png}
+  \includegraphics[width=1\linewidth]{figures/groundtruth2.png}
   % replacing the above command with the one below will explicitly set
   % the bounding box of the PS figure to the rectangle (xl,yl),(xh,yh).
   % It will also prevent LaTeX from reading the PS file to determine
@@ -279,7 +279,7 @@ We reconstructed 3D face models of various celebrities, including George Clooney
      %      }
   %
   \caption{\label{fig:groundtruth}
-           Distance visualization between a ground truth 3D face acquired using an Artec Eva scanner, and reconstructed faces without (left) and with (right) the silhouette constraints. Red indicates larger distances and green smaller ones. Using silhouette constraints leads to smaller errors in particular in the area around the nose.}
+           Distance visualization between a ground truth 3D face acquired using an Artec Eva scanner, and reconstructed faces without (left) and with (right) the silhouette constraints. Red indicates larger distances and green smaller ones. Using silhouette constraints leads to smaller errors in particular in the area around the nose. The range of the color of distance is 0~12mm from green to red}
 \end{figure}
 
 %From the result in Figure~\ref{fig:all} we can see, compared with the previous method, our result has obvious improvement on the nose and the chin, as well as the eyes. In each iteration, the mesh is closer and closer to the real geometry, then the 3D face has better correspondence to images. A good correspondence is vital to create the reflectance intensity matrix $M$. The normals to reconstruct face is mainly from photometric stereo approach. Except the nose and chin, the silhouette constraint can improve the whole face quality.

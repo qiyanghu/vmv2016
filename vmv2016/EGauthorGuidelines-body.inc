@@ -243,7 +243,7 @@ We reconstruct the face of the celebrities, Geoge Clooney(1152 photos),  Bruce W
      %      }
   %
   \caption{\label{fig:firstExample}
-           the warped silhouette in each iteration. Red: warped silhouette. Green: extracted silhouette in image.}
+           the warped silhouette in iteration 1, 4 and 7. Red points are warped silhouette. The silhouette is closer and closer to the real silhouette along the iteration}
 \end{figure}
 
 \begin{figure}[htb]

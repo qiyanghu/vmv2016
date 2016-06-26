@@ -260,7 +260,7 @@ We reconstructed 3D face models of various celebrities, including George Clooney
            We compare 3D silhouette points projected onto input images that were obtained after convergence with our silhouette constraints (green points) and without (red points) for three different individuals. Our approach clearly leads to more faithful reconstruction of the true silhouettes in the input images.}
 \end{figure}
 
-\textbf{Ground-truth Comparison} Figure~\ref{fig:groundtruth} shows a comparison of our approach with silhouette constraints to the technique by Roth et al. \cite{Roth:2015:UFR} with respect to a ground truth 3D geometry obtained using an Artec Eva 3D scanner. We align the reconstructed faces with the ground truth using the landmarks on the two meshes. Then we compute the Euclidean distance from each vertex on the ground truth to the closet point on the reconstructed mesh and normalize the distances. Figure~\ref{fig:groundtruth} shows a color coded visualization of the distances, where red corresponds to big distances to the ground truth, and green represents small distances. We observe that our result matches better to the ground truth especially in the area around the nose and the chin. 
+\textbf{Ground-truth Comparison} Figure~\ref{fig:groundtruth} shows a comparison of our approach with silhouette constraints to the technique by Roth et al. \cite{Roth:2015:UFR} with respect to a ground truth 3D geometry obtained using a Kinect 3D scanner. We align the reconstructed faces with the ground truth using the landmarks on the two meshes. Then we compute the Euclidean distance from each vertex on the ground truth to the closet point on the reconstructed mesh and normalize the distances. Figure~\ref{fig:groundtruth} shows a color coded visualization of the distances, where red corresponds to big distances to the ground truth, and green represents small distances. We observe that our result matches better to the ground truth especially in the area around the nose and the chin. 
 
 \begin{figure}[htb]
   \centering
@@ -279,7 +279,7 @@ We reconstructed 3D face models of various celebrities, including George Clooney
      %      }
   %
   \caption{\label{fig:groundtruth}
-           Distance visualization between a ground truth 3D face acquired using an Artec Eva scanner, and reconstructed faces without (left) and with (right) the silhouette constraints. Red indicates larger distances and green smaller ones. Using silhouette constraints leads to smaller errors in particular in the area around the nose. The range of the color of distance is 0-12mm from green to red}
+           Distance visualization between a ground truth 3D face acquired using a Kinect 3D scanner, and reconstructed faces without (left) and with (right) the silhouette constraints. Red indicates larger distances and green smaller ones. Using silhouette constraints leads to smaller errors in particular in the area around the nose. The range of the distance is 0-18mm from green to red.}
 \end{figure}
 
 %From the result in Figure~\ref{fig:all} we can see, compared with the previous method, our result has obvious improvement on the nose and the chin, as well as the eyes. In each iteration, the mesh is closer and closer to the real geometry, then the 3D face has better correspondence to images. A good correspondence is vital to create the reflectance intensity matrix $M$. The normals to reconstruct face is mainly from photometric stereo approach. Except the nose and chin, the silhouette constraint can improve the whole face quality.

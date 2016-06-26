@@ -260,13 +260,13 @@ We reconstructed 3D face models of various celebrities, including George Clooney
            We compare 3D silhouette points projected onto input images that were obtained after convergence with our silhouette constraints (green points) and without (red points) for three different individuals. Our approach clearly leads to more faithful reconstruction of the true silhouettes in the input images.}
 \end{figure}
 
-\textbf{Ground-truth Comparison} Figure~\ref{fig:groundtruth} shows a comparison of our approach with silhouette constraints to the technique by Roth et al. \cite{Roth:2015:UFR} with respect to a ground truth 3D geometry obtained using an Artec Eva 3D scanner. We align the reconstructed faces with the ground truth using the landmarks on the two meshes. Then we compute the Euclidean distance from each vertex on the ground truth to the closet point on the reconstructed mesh and normalize the distances. Figure~\ref{fig:groundtruth} shows a color coded visualization of the distances, where red corresponds to big distances to the ground truth, and green represents small distances. We observe that our result matches better to the ground truth especially in the area around the nose. 
+\textbf{Ground-truth Comparison} Figure~\ref{fig:groundtruth} shows a comparison of our approach with silhouette constraints to the technique by Roth et al. \cite{Roth:2015:UFR} with respect to a ground truth 3D geometry obtained using an Artec Eva 3D scanner. We align the reconstructed faces with the ground truth using the landmarks on the two meshes. Then we compute the Euclidean distance from each vertex on the ground truth to the closet point on the reconstructed mesh and normalize the distances. Figure~\ref{fig:groundtruth} shows a color coded visualization of the distances, where red corresponds to big distances to the ground truth, and green represents small distances. We observe that our result matches better to the ground truth especially in the area around the nose and the chin. 
 
 \begin{figure}[htb]
   \centering
   % the following command controls the width of the embedded PS file
   % (relative to the width of the current column)
-  \includegraphics[width=1\linewidth]{figures/groundtruth2.png}
+  \includegraphics[width=1\linewidth]{figures/ground_truth3.png}
   % replacing the above command with the one below will explicitly set
   % the bounding box of the PS figure to the rectangle (xl,yl),(xh,yh).
   % It will also prevent LaTeX from reading the PS file to determine
@@ -307,7 +307,7 @@ We described a method for unconstrained 3D face reconstruction for image collect
   %\mbox{} \hfill
   % the following command controls the width of the embedded PS file
   % (relative to the width of the current column)
-  \includegraphics[width=.9\linewidth]{figures/all4.png}
+  \includegraphics[width=.9\linewidth]{figures/all.png}
   % replacing the above command with the one below will explicitly set
   % the bounding box of the PS figure to the rectangle (xl,yl),(xh,yh).
   % It will also prevent LaTeX from reading the PS file to determine

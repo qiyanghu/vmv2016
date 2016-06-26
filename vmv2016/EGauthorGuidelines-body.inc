@@ -279,7 +279,7 @@ We reconstructed 3D face models of various celebrities, including George Clooney
      %      }
   %
   \caption{\label{fig:groundtruth}
-           Distance visualization between a ground truth 3D face acquired using a Kinect 3D scanner, and reconstructed faces without (left) and with (right) the silhouette constraints. Red indicates larger distances and green smaller ones. Using silhouette constraints leads to smaller errors in particular in the area around the nose. The range of the distance is 0-18mm from green to red.}
+           Distance visualization between a ground truth 3D face acquired using a Kinect 3D scanner, and reconstructed faces without (left) and with (right) the silhouette constraints. Red indicates larger distances and green smaller ones. Using silhouette constraints leads to smaller errors in particular in the area around the nose. The range of the distance is 0-20mm from green to red.}
 \end{figure}
 
 %From the result in Figure~\ref{fig:all} we can see, compared with the previous method, our result has obvious improvement on the nose and the chin, as well as the eyes. In each iteration, the mesh is closer and closer to the real geometry, then the 3D face has better correspondence to images. A good correspondence is vital to create the reflectance intensity matrix $M$. The normals to reconstruct face is mainly from photometric stereo approach. Except the nose and chin, the silhouette constraint can improve the whole face quality.

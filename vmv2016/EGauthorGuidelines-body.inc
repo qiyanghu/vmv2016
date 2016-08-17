@@ -5,24 +5,29 @@
   
 \usepackage{amsmath}
 \usepackage{amsfonts}
+
 \title[3D Face Reconstruction with Silhouette Constraints]%
       {3D Face Reconstruction with Silhouette Constraints}
 
 % for anonymous conference submission please enter your SUBMISSION ID
 % instead of the author's name (and leave the affiliation blank) !!
-%\author[D. Fellner \& S. Behnke]
-       %{D.\,W. Fellner\thanks{Chairman Eurographics Publications Board}$^{1,2}$
-%        and S. Behnke$^{2}$
-%        S. Spencer$^2$\thanks{Chairman Siggraph Publications Board}
-%        \\
+\author[Q. Hu \& M. Zwicker \& P. Favaro]
+       {Q.Hu \, M. Zwicker
+        and P. Favaro
+        \\
+% For Computer Graphics Forum: Please use the abbreviation of your first name.
+         Institute of Computer Science and Applied Mathematics, University of Bern, Switzerland\\
+%         $^2$Institut f{\"u}r ComputerGraphik \& Wissensvisualisierung, TU Graz, Austria
+%        $^2$ Another Department to illustrate the use in papers from authors
+%             with different affiliations
+       }
+        
 % For Computer Graphics Forum: Please use the abbreviation of your first name.
          %$^1$TU Darmstadt \& Fraunhofer IGD, Germany\\
 %         $^2$Institut f{\"u}r ComputerGraphik \& Wissensvisualisierung, TU Graz, Austria
 %        $^2$ Another Department to illustrate the use in papers from authors
 %             with different affiliations
 %       }
-\author{Anonymous}
-
 % ------------------------------------------------------------------------
 
 % if the Editors-in-Chief have given you the data, you may uncomment
@@ -72,7 +77,7 @@ The rest of this paper is organized as follows: We first review related work in 
 
 \paragraph*{Face Reconstruction from Image Collections} Face reconstruction ``in the wild'' from collections of images under uncontrolled illumination, and with varying facial pose and expressions, has been a long standing problem in computer vision. State of the art methods are mostly based on photometric stereo, such as the pioneering work by Kemelmacher-Shlizerman and Seitz \cite{Kemelmacher-Shlizerman:2011:FRW}, and its extension to video input \cite{Suwajanakorn2014}. This approach has been improved recently by Roth et al.~\cite{Roth:2015:UFR} who solve for a full 3D mesh instead of a 2.5D height field, and leverage state of the art 2D facial landmark estimation \cite{Zan:2013:LCM}. We build on the work by Roth et al., but extend it to include silhouette constraints to overcome some of the limitations of photometric stereo.
 
-\paragraph*{Face Tracking and Animation from Video} Research in the Computer Graphics community has achieved impressive results for the problem of tracking, reconstructing, and animating faces based on video data. Generally, state of the art techniques represent faces and facial expressions using dynamic expression models, also called blendshape models \cite{Cao:2014:FWA}. While earlier work relied on RGBD video input \cite{Weise:2011:RPF,Li:2013:RFA,Bouaziz:2013:OMR}, it is now possible to solve the tracking and reconstruction problem based on RGB video data in real-time at impressive quality as demonstrated by Cao et al. \cite{Cao:2014:DDE,Cao:2015:RHF}. The key idea in this work is to learn a regression model that maps 2D video frames to 3D facial landmarks, and then to register the DEM to the 3D landmarks \cite{Cao:2013:SRR}. While this approach required calibration for individual users, it has then been extended to a calibration-free approach that iteratively refines the model \cite{Cao:2014:DDE}. A most recent extension also synthesizes highly detailed geometry such as wrinkles \cite{Cao:2015:RHF}. The key difference to our work is that these techniques either require calibration for each user, or they rely on the coherence of video input to adapt the model in an iterative manner.
+\paragraph*{Face Tracking and Animation from Video} Research in the Computer Graphics community has achieved impressive results for the problem of tracking, reconstructing, and animating faces based on video data. Generally, state of the art techniques represent faces and facial expressions using dynamic expression models, also called blendshape models \cite{Cao:2014:FWA}. While earlier work relied on RGBD video input \cite{Weise:2011:RPF,Li:2013:RFA,Bouaziz:2013:OMR}, it is now possible to solve the tracking and reconstruction problem based on RGB video data in real-time at impressive quality. \cite{Cao:2014:DDE,Cao:2015:RHF,GZCVVPT16,thies2016face}. The key idea in this work is to learn a regression model that maps 2D video frames to 3D facial landmarks, and then to register the DEM to the 3D landmarks \cite{Cao:2013:SRR}. While this approach required calibration for individual users, it has then been extended to a calibration-free approach that iteratively refines the model \cite{Cao:2014:DDE}. A most recent extension also synthesizes highly detailed geometry such as wrinkles \cite{Cao:2015:RHF}. The key difference to our work is that these techniques either require calibration for each user, or they rely on the coherence of video input to adapt the model in an iterative manner.
 
 
 %-------------------------------------------------------------------------
@@ -102,7 +107,7 @@ Equation~\ref{eq:warptemplate} is solved iteratively. First, the projection matr
 
 \paragraph*{Photometric Normals} Next, a photometric stereo technique \cite{Kemelmacher-Shlizerman:2011:FRW} is used to estimate per vertex normals on the deformed template. First, an image reflectance intensity matrix $M \in \mathbb{R}^{n \times p}$ is constructed, where $n$ is the number of images and $p$ the number of mesh vertices. Each element $i,j$ stores the reflectance intensity of the pixel in image $i$ that corresponds to vertex $j$ on the mesh, where correspondence is established by projecting the mesh onto image $i$ using the projection matrix $P_i$. For non-frontal images some vertices are not visible, which leads to undefined matrix entries that are filled using matrix completion \cite{Lin09}. Matrix $M$ is then factorized using SVD, and the rank-4 approximation estimates a light matrix $L \in \mathbb{R}^{n \times 4}$ and shape matrix $S \in \mathbb{4 \times p}$, which represents the normals and albedos at each mesh vertex. 
 
-The bas-relief ambiguity, that is, $LS=(\tilde{L}A^{-1})(A\tilde{S})$ with ambiguous factors $\tilde{L}$ and $\tilde{A}$ and any invertible $A \in \mathbb{R}^{4 \times 4}$, is resolved using the approach by Kemelmacher-Shlizerman and Seitz \cite{Kemelmacher-Shlizerman:2011:FRW}. First, the images that are modeled well by the rank-4 approximation are selected, that is, $\|M-LS\|<\epsilon$. The the ambiguity is recovered by solving for $\arg{\min}\underset{A}\,\|S^{t} - A\tilde{S}\|^2 $, where $S^{t}$ is the shape vector of the template. 
+The bas-relief ambiguity, that is, $LS=(\tilde{L}A^{-1})(A\tilde{S})$ with ambiguous factors $\tilde{L}$ and $\tilde{A}$ and any invertible $A \in \mathbb{R}^{4 \times 4}$, is resolved using the approach by Kemelmacher-Shlizerman and Seitz \cite{Kemelmacher-Shlizerman:2011:FRW}. First, the images that are modeled well by the rank-4 approximation are selected, that is, $\|M-LS\|<\epsilon$. The the ambiguity is recovered by solving for $\arg{\min}\underset{A}\,\|S^{t} - A\tilde{S}\|^2 $, where $S^{t}$ is the shape vector of the template. After estimating the albedo $\rho$, normals $n$ is obtained. 
 
 %Refer to approach in \cite{Kemelmacher-Shlizerman:2011:FRW}, store each warped image reflectance intensity in a matrix $M$, where each row represents the pixels in one image. For the non-frontal images, some vertices are not visible. They set the intensity of the non-visible vertices as zeros and use matrix completion \cite{Lin09} to fulfill the missing value to obtain the full $M$. Factorize the matrix $M$ using SVD and take the rank-4 approximation to estimate the shape $S$ and light $L$, where $S$ contains the normals $n$ and albedo $\rho$, and $L$ contains the light directoin. Select the images that are modeled well by the rank-4 approximation, i.e.,$\|M-LS\|<\epsilon$.  Since the factorization is not unique, it leads to one ambiguity in $S$ and $L$, i.e., $LS=(\tilde{L}A^{-1})(A\tilde{S})$. Recover the ambiguity by solving for $\arg{\min}\underset{A}\,\|S^{t} - A\tilde{S}\|^2 $, where $S^{t}$ is the shape vector of the template. 
 
@@ -178,7 +183,7 @@ Since the reconstructed model is close to the real shape of the individual, the 
 
 In our approach, the face model is reconstructed from the average normals of all images. The silhouette points that only appear in few images, however, may lead to pointy regions on the 3D mesh. Especially for the chin, extreme facial expressions such as an open mouth, may result in a bad estimation of the shape $X$. For example, if we extract silhouettes on a laughing face, the curve of the laughing cheek and chin is much different from the neural face. In this case the edge of the face in the image will have a bad correspondence with the 3D model. 
 %If these corresponded vertex $X_{c}$ only have corresponde with one extreme expressin image, then $X_{c}$ will get bad estimation and lead to a noise on the 3D mesh. 
-Hence we discard silhouette points appearing only in few images to decrease the influence of noise in the silhouette extraction and the various expressions. 
+Hence we discard silhouette points appearing only in few images to decrease the influence of noise in the silhouette extraction and the various expressions. In our implementation, the silhouette points appearing in leass than four images are discarded.
 
 
 % All text with the exception of the abstract must be in a two-column format.
@@ -219,9 +224,9 @@ Keeping the projection matrices $P_i$ (and $P_s$) fixed, we find $X$ by solving 
 
 In this section we present visualizations and results of our algorithm, and demonstrate the improvements over the previous state of the art method by Roth et al. \cite{Roth:2015:UFR}.
 
-\paragraph*{Dataset} As input data for our approach we collected photos of celebrities from various websitse. First we tried to use the Google API to collect photos by searching for celebrities. Less than half of the results could be used for our experiments, however, since many of the returned images are not portrait photos or photos that are only related to the celebrity, but do not show the desired person. Hence we collected images from various websites like Mtime and Douban using a python script to download images for different individuals. For the initial template used to reconstruct the model, we use the face model from Zhang et al. \cite{Zhang04}. The landmarks are detected using the method by Kazemi and Sullivan \cite{kazemi2014one}.
+\paragraph*{Dataset} As input data for our approach we collected photos of celebrities from various websitse. First we tried to use the Google API to collect photos by searching for celebrities. Less than half of the results could be used for our experiments, however, since many of the returned images are not portrait photos or photos that are only related to the celebrity, but do not show the desired person. Hence we collected images from various ways, Bing API, websites Mtime and Douban using a python script to download images for different individuals. For the initial template used to reconstruct the model, we use the face model from Zhang et al. \cite{Zhang04}. The landmarks are detected using the method by Kazemi and Sullivan \cite{kazemi2014one}.
 
-We reconstructed 3D face models of various celebrities, including George Clooney (1152 photos),  Bruce Willis (835), Edward Norton (707), Tom Cruise (695), James McAvoy (1138), and Colin Firth(862). All photos were collected from the internet as mentioned above. We use opencv to crop the images to keep the face only. We do not scale the image size, and retain the resolution of the downloaded (cropped) image. The photos are completely unconstrained, including unknown illumination, pose, and facial expressions. Figure~\ref{fig:all} shows a comparison of our results and the results from our implementation of the method by Roth et al. \cite{Roth:2015:UFR}. In the profile views, we can see that our results have obvious improvements around the nose and chin, as well as a better reconstruction around the eyes. We observe some more detail and less oversmoothing in our method, because the silhouette constraints lead better correspondences between the 3D mesh and the input images, which helps to estimate more accurate photometric normals.
+We reconstructed 3D face models of various celebrities, including George Clooney (1152 photos),  Bruce Willis (835), Edward Norton (707), Tom Cruise (695), James McAvoy (1138), and Colin Firth(862). The photos which are used to extract silhouette take up around $10\%$ of the total amount for each individual. All photos were collected from the internet as mentioned above. We use opencv to crop the images to keep the face only. We do not scale the image size, and retain the resolution of the downloaded (cropped) image. The photos are completely unconstrained, including unknown illumination, pose, and facial expressions. Figure~\ref{fig:all} shows a comparison of our results and the results from our implementation of the method by Roth et al. \cite{Roth:2015:UFR}. In the profile views, we can see that our results have obvious improvements around the nose and chin, as well as a better reconstruction around the eyes. We observe some more detail and less oversmoothing in our method, because the silhouette constraints lead better correspondences between the 3D mesh and the input images, which helps to estimate more accurate photometric normals.
 
 \paragraph*{Silhouette Constraint Visualization} In Figure~\ref{fig:firstExample} we visualize the silhouette on the 3D mesh by projecting the 3D silhouette points onto an input image as our main iteration loop (Section~\ref{sec:silhouetteconstraints}) progresses. We see how the projected silhouette points better and better approximate the silhouette in the input image. Figure~\ref{fig:sil_all} compares the silhouettes of the 3D reconstruction obtained with (green points) and without (red points) the silhouette constraints after convergence for three different individuals. Clearly, our silhouette constraints lead to more accurate correspondences with the true silhouettes in the input images. 
 
@@ -290,6 +295,13 @@ We reconstructed 3D face models of various celebrities, including George Clooney
 \label{sec:conclusions}
 
 We described a method for unconstrained 3D face reconstruction for image collections of individuals dowloaded from the internet, which exhibit unknown illumination, pose, and facial expressions. Our key idea is to introduce silhouette constraints, which are iteratively extracted and updated on the reconstructed 3D mesh, and put into correspondence with edges in each input image. We demonstrate that taking into account our silhouette constraints generally leads to more detailed and accurate 3D reconstructions. In the future, we believe that unconstrained face recognition can be further improved by using dynamic expression models, instead of a single template mesh with a neutral facial expression.
+
+
+%--------------------------------------------------------------------------
+\section{Acknowledgement}
+\label{sec:acknowledgement}
+
+This work was supported by Swiss National Science Foundation 200021$\_$156253.
 
 %-------------------------------------------------------------------------
 

@@ -165,17 +165,18 @@ To guarantee proper extraction of silhouettes from the 2D input images, we use o
 \subsection{3D-2D Silhouette Correspondences}
 \label{sec:correspondences}
 
-Next we describe how we establish correspondences between 3D silhouette points on the mesh, and silhouette candidates on the 2D images. Let $X_{sil3D}^i$ denote the silhouette candidates on the 3D mesh for image $i$. We project these points onto the corresponding 2D image using the current estimation of the projection and rotations matrices. Then, for each 3D silhouette point projected onto the image, we establish correspondence to the closest 2D silhouette candidate.
-
+Next, we describe how we establish correspondences between 3D silhouette points on the mesh, and silhouette candidates on the 2D images. Let $X_{sil3D}^i$ denote the silhouette candidates on the 3D mesh for image $i$. 
+We define this vector via the diagonal matrix $\Delta_i$, which selects the 3D vertices from the shape $X$ 
+\begin{equation}
+X_{sil3D}^i  = \Delta_i X.
+\end{equation}
+Then, we project these points onto the corresponding 2D image using the current estimation of the projection and rotations matrices. Finally, for each 3D silhouette point projected onto the image, we establish the correspondence to the closest 2D point in the detected 2D silhouette $X_{sil2D}^{i}$.
 %The edge on the image is detected using Canny edge detector. ~\cite{Canny86} From the edge of one image, for each silhouette candidates on the 3D face model $X_{sil3D}^{i}$ , find the closest  edge points by minimizing the square distance between warped silhouette point and edge points, i.e.,
-More precisely, the $k$-th 3D silhouette point $X_{sil3D,k}^{i}$ for image $i$ corresponds to 2D silhouette candidate $X_{sil2D,j}^i$, where 
-%
+The vector $B_i$ collects all the 2D points in $X_{sil2D}^{i}$ corresponding to each 3D point in $X_{sil3D}^i $ (the correspondence is bijective). The $k$-th 2D point in $B_i$ is therefore defined as the point $X_{sil2D,j}^{i}$ such that 
 \begin{equation}
 j = \arg{\min}_{l} \|P_{i} X_{sil3D,k}^{i} - X_{sil2D,l}^{i}\|^2.
 \end{equation} 
-%
-
-Finally, we store the subset of 2D silhouette candidates that are selected using the above procedure in image $i$ in a vector $S_i$.
+%Finally, we store the subset of 2D silhouette candidates that are selected using the above procedure in image $i$ in a vector $S_i$.
 
 Since the reconstructed model is close to the real shape of the individual, the projected silhouette $P_i X_{sil3D,k}^{i}$ should not be too far away from the corresponding edge. In addition, we set a threshold for the square distance, and if the distance is larger than the threshold, that point will be considered as outlier and rejected. This can also reduce the artifacts caused by images containing extreme facial expressions.
 
@@ -203,18 +204,18 @@ Given the silhouette points on the 3D model and the corresponding silhouettes in
 \begin{equation}
 \begin{split}
 E&=\|LX - H^{k}n\|^2+ \lambda_{l}\sum_{i}{\|P_{i}D_{i}X-W_{i}\|^2} \\
-&+\lambda_{b}\|L_{b}X - LX\|^2+\lambda_{s} \sum_{s\in I_{sil}}{\|P_{s}\Delta_{s}X-S_{s}\|^2}
+&+\lambda_{b}\|L_{b}X - LX\|^2+\lambda_{s} \sum_{i\in I_{sil}}{\|P_{i}\Delta_{i}X-B_{i}\|^2}
 \end{split}
 \end{equation} 
 %
-where $I_{sil}$ is the set of indices of the images containing valid silhouette points, $\Delta_{s}$ is a diagonal matrix selecting the 3D vertices appearing on the silhouette in image $s$, and $S_s$ stores the corresponding 2D silhouette points in image $s$ as described in Section~\ref{sec:correspondences}. Finally, $\lambda_{s}$ is a silhouette constraint weight.
+where $I_{sil}$ is the set of indices of the images containing valid silhouette points, $\Delta_{i}$ is the diagonal matrix selecting the 3D vertices appearing on the silhouette in image $i$, and $B_i$ stores the corresponding 2D silhouette points in image $i$ as described in Section~\ref{sec:correspondences}. Finally, $\lambda_{s}$ is a silhouette constraint weight.
 %where $I_{sil}$ is the set of indices of the images containing silhouette points, $P_{sj}$  is weakly prospective projected matrix between  silhouette vertices $X_{j}$ and 2D silhouette points in $s$ -th images, $D_{sj}$  is a diagonal matrix selecting out the silhouette vertex that have a correspondence in image $s$, . $\lambda_{s}$ is the silhouette constraint weight.
-Keeping the projection matrices $P_i$ (and $P_s$) fixed, we find $X$ by solving the linear system
+While keeping the projection matrices $P_i$ fixed, we find $X$ by solving the linear system
 %
 \begin{equation}
 \begin{split}
-&(\mathcal{L}^2+\lambda_{b}\mathcal{L}_b^2 +\lambda_{l}\sum_{i}{D_{i}P_{i}^{T}P_{i}D_{i}}+\lambda_{s} \sum_{s \in I_{sil}}{\Delta_{s}P_{s}^{T}P_{s}\Delta_{s}})X\\
-&=\mathcal{L}H+\lambda_{b}\mathcal{L}_b^2X+\lambda_{l}\sum_{i}{(P_{i}^T)W_{i}}+\lambda_{s}\sum_{s \in I_{sil}}{P_{s}^{T}\Delta_{s}S_{s}}.
+&(\mathcal{L}^2+\lambda_{b}\mathcal{L}_b^2 +\lambda_{l}\sum_{i}{D_{i}P_{i}^{T}P_{i}D_{i}}+\lambda_{s} \sum_{i \in I_{sil}}{\Delta_{i}P_{i}^{T}P_{i}\Delta_{i}})X\\
+&=\mathcal{L}H+\lambda_{b}\mathcal{L}_b^2X+\lambda_{l}\sum_{i}{(P_{i}^T)W_{i}}+\lambda_{s}\sum_{i \in I_{sil}}{P_{i}^{T}\Delta_{i}B_{i}}.
 \end{split}
 \end{equation} 
 
@@ -226,11 +227,11 @@ Keeping the projection matrices $P_i$ (and $P_s$) fixed, we find $X$ by solving 
 
 In this section we present visualizations and results of our algorithm, and demonstrate the improvements over the previous state of the art method by Roth et al. \cite{Roth:2015:UFR}.
 
-\paragraph*{Dataset} As input data for our approach we collected photos of celebrities from various websitse. First we tried to use the Google API to collect photos by searching for celebrities. Less than half of the results could be used for our experiments, however, since many of the returned images are not portrait photos or photos that are only related to the celebrity, but do not show the desired person. Hence we collected images from various ways, Bing API, websites Mtime and Douban using a python script to download images for different individuals. For the initial template used to reconstruct the model, we use the face model from Zhang et al. \cite{Zhang04}. The landmarks are detected using the method by Kazemi and Sullivan \cite{kazemi2014one}.
+\paragraph*{Dataset.} As input data for our approach we collected photos of celebrities from various websites. First, we used the Google API to collect photos by searching for celebrities. Less than half of the results could be used for our experiments, however, since many of the returned images are not portrait photos or photos that are only related to the celebrity, but do not show the desired person. Hence we collected images from various ways, Bing API, websites Mtime and Douban using a python script to download images for different individuals. For the initial template used to reconstruct the model, we use the face model from Zhang et al. \cite{Zhang04}. The landmarks are detected using the method by Kazemi and Sullivan \cite{kazemi2014one}.
 
-We reconstructed 3D face models of various celebrities, including George Clooney (1152 photos),  Bruce Willis (835), Edward Norton (707), Tom Cruise (695), James McAvoy (1138), and Colin Firth(862). The photos which are used to extract silhouette take up around $10\%$ of the total amount for each individual. All photos were collected from the internet as mentioned above. We use opencv to crop the images to keep the face only. We do not scale the image size, and retain the resolution of the downloaded (cropped) image. The photos are completely unconstrained, including unknown illumination, pose, and facial expressions. Figure~\ref{fig:all} shows a comparison of our results and the results from our implementation of the method by Roth et al. \cite{Roth:2015:UFR}. In the profile views, we can see that our results have obvious improvements around the nose and chin, as well as a better reconstruction around the eyes. We observe some more detail and less oversmoothing in our method, because the silhouette constraints lead better correspondences between the 3D mesh and the input images, which helps to estimate more accurate photometric normals.
+We reconstructed 3D face models of various celebrities, including George Clooney (1152 photos),  Bruce Willis (835), Edward Norton (707), Tom Cruise (695), James McAvoy (1138), and Colin Firth (862). The photos which are used to extract silhouette take up around $10\%$ of the total amount for each individual. All photos were collected from the internet as mentioned above. We use opencv to crop the images to keep the face only. We do not scale the image size, and retain the resolution of the downloaded (cropped) image. The photos are completely unconstrained, including unknown illumination, pose, and facial expressions. Figure~\ref{fig:all} shows a comparison of our results and the results from our implementation of the method by Roth et al. \cite{Roth:2015:UFR}. In the profile views, we can see that our results have obvious improvements around the nose and chin, as well as a better reconstruction around the eyes. We observe some more detail and less oversmoothing in our method, because the silhouette constraints lead better correspondences between the 3D mesh and the input images, which helps to estimate more accurate photometric normals.
 
-\paragraph*{Silhouette Constraint Visualization} In Figure~\ref{fig:firstExample} we visualize the silhouette on the 3D mesh by projecting the 3D silhouette points onto an input image as our main iteration loop (Section~\ref{sec:silhouetteconstraints}) progresses. We see how the projected silhouette points better and better approximate the silhouette in the input image. Figure~\ref{fig:sil_all} compares the silhouettes of the 3D reconstruction obtained with (green points) and without (red points) the silhouette constraints after convergence for three different individuals. Clearly, our silhouette constraints lead to more accurate correspondences with the true silhouettes in the input images. 
+\paragraph*{Silhouette Constraint Visualization.} In Figure~\ref{fig:firstExample} we visualize the silhouette on the 3D mesh by projecting the 3D silhouette points onto an input image as our main iteration loop (Section~\ref{sec:silhouetteconstraints}) progresses. We see how the projected silhouette points better and better approximate the silhouette in the input image. Figure~\ref{fig:sil_all} compares the silhouettes of the 3D reconstruction obtained with (green points) and without (red points) the silhouette constraints after convergence for three different individuals. Clearly, our silhouette constraints lead to more accurate correspondences with the true silhouettes in the input images. 
 
 
 \begin{figure}[t]
@@ -267,7 +268,7 @@ We reconstructed 3D face models of various celebrities, including George Clooney
            We compare 3D silhouette points projected onto input images that were obtained after convergence with our silhouette constraints (green points) and without (red points) for three different individuals. Our approach clearly leads to a more faithful reconstruction of the true silhouettes in the input images.}
 \end{figure}
 
-\textbf{Ground-truth Comparison} Figure~\ref{fig:groundtruth} shows a comparison of our approach with silhouette constraints to the technique by Roth et al. \cite{Roth:2015:UFR} with respect to a ground truth 3D geometry obtained using a Kinect 3D scanner. We align the reconstructed faces with the ground truth using the landmarks on the two meshes. Then we compute the Euclidean distance from each vertex on the ground truth to the closet point on the reconstructed mesh and normalize the distances. Figure~\ref{fig:groundtruth} shows a color coded visualization of the distances, where red corresponds to big distances to the ground truth, and green represents small distances. We observe that our result matches better to the ground truth especially in the area around the nose and the chin. 
+\textbf{Ground-truth Comparison.} Figure~\ref{fig:groundtruth} shows a comparison of our approach with silhouette constraints to the technique by Roth et al. \cite{Roth:2015:UFR} with respect to a ground truth 3D geometry obtained using a Kinect 3D scanner. We align the reconstructed faces with the ground truth using the landmarks on the two meshes. Then we compute the Euclidean distance from each vertex on the ground truth to the closet point on the reconstructed mesh and normalize the distances. Figure~\ref{fig:groundtruth} shows a color coded visualization of the distances, where red corresponds to big distances to the ground truth, and green represents small distances. We observe that our result matches better to the ground truth especially in the area around the nose and the chin. 
 
 \begin{figure}[htb]
   \centering

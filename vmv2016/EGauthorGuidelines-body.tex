@@ -37,15 +37,24 @@
 % \volume{27}   % the volume in which the issue will be published;
 % \issue{1}     % the issue number of the publication
 % \pStartPage{1}      % set starting page
+\usepackage{graphicx,booktabs,multirow}
 
 
 %-------------------------------------------------------------------------
 \begin{document}
 
+
+
 \teaser{
-  \includegraphics[width=\linewidth]{figures/teaser.png}
+  %\includegraphics[width=\linewidth]{figures/teaser.png}
+  \includegraphics[height=.2\linewidth, width=.15\linewidth]{figures/teaser/bw_front.jpg}  
+  \includegraphics[height=.2\linewidth,width=.16\linewidth,trim=0  -20 0 0]{figures/teaser/bw_roth_front.png}  
+  \includegraphics[height=.2\linewidth,trim=130  0 90 0,clip]{figures/teaser/bw_front.eps}    
+  \includegraphics[height=.2\linewidth,width=.15\linewidth]{figures/teaser/bw_profile.jpg}
+  \includegraphics[height=.2\linewidth,width=.15\linewidth]{figures/teaser/bw_roth_profile.png}  
+  \includegraphics[height=.2\linewidth,trim=140  0 130 0,clip]{figures/teaser/bw_profile.eps}    
   \centering
-   \caption{We introduce silhouette constraints to improve the quality of unconstrained 3D face reconstruction. Here, we show a comparison between the state of the art approach by Roth et al. \cite{Roth:2015:UFR} and our technique. Note how our approach follows more faithfully the silhouettes of the input images, especially around the nose region.}
+   \caption{We introduce silhouette constraints to improve the quality of unconstrained 3D face reconstruction. Here, we show a comparison between the state of the art approach by Roth et al. \cite{Roth:2015:UFR} and our technique. The 2nd and 5th column are the results from ~\cite{Roth:2015:UFR}, the 3rd and 6th column are our results. Note how our approach follows more faithfully the silhouettes of the input images, especially around the nose region.}
  \label{fig:teaser}
 }
 
@@ -271,10 +280,24 @@ We reconstructed 3D face models of various celebrities, including George Clooney
 \textbf{Ground-truth Comparison.} Figure~\ref{fig:groundtruth} shows a comparison of our approach with silhouette constraints to the technique by Roth et al. \cite{Roth:2015:UFR} with respect to a ground truth 3D geometry obtained using a Kinect 3D scanner. We align the reconstructed faces with the ground truth using the landmarks on the two meshes. Then, we compute the Euclidean distance from each vertex on the ground truth to the closest point on the reconstructed mesh and normalize the distances. Figure~\ref{fig:groundtruth} shows a color coded visualization of the distances, where red corresponds to big distances to the ground truth, and green represents small distances. We observe that our result matches better the ground truth especially in the area around the nose and the chin. 
 
 \begin{figure}[htb]
+
+   \includegraphics[height=.4\linewidth,width=.3\linewidth,trim=130  -40 90 0,clip]{figures/groundtruth/gt_roth_front4}  
+  \includegraphics[height=.41\linewidth,width=.3\linewidth,trim=130  -40 100 0,clip]{figures/groundtruth/attila_front.eps}  
+  \includegraphics[height=.41\linewidth,width=.3\linewidth,trim=120  -40 100 -0,clip]{figures/groundtruth/exp_gt_front.eps}    
+  
+  \includegraphics[height=.41\linewidth,width=.3\linewidth,trim=  0  -60  0 0,clip]{figures/groundtruth/exp_gt_roth.png}  
+  \includegraphics[height=.41\linewidth,width=.3\linewidth,trim=130  -40 100 0,clip]{figures/groundtruth/attila_profile.eps}  
+  \includegraphics[height=.41\linewidth,width=.3\linewidth,trim=130  -50 100 0,clip]{figures/groundtruth/exp_gt_profile.eps}  
+  
+   \includegraphics[height=.41\linewidth,width=.3\linewidth,trim=110  -60 80 0,clip]{figures/groundtruth/exp_roth_front3.eps}  
+  \includegraphics[height=.41\linewidth,width=.3\linewidth,trim=110  -60 80 0,clip]{figures/groundtruth/exp_front.eps}  
+  \includegraphics[height=.41\linewidth,width=.3\linewidth,trim=-20  0 -50 0,clip]{figures/groundtruth/colorbar.png} 
+   
   \centering
   % the following command controls the width of the embedded PS file
   % (relative to the width of the current column)
-  \includegraphics[width=1\linewidth]{figures/ground_truth3.png}
+ % \includegraphics[width=1\linewidth]{figures/ground_truth3.png}
+ 
   % replacing the above command with the one below will explicitly set
   % the bounding box of the PS figure to the rectangle (xl,yl),(xh,yh).
   % It will also prevent LaTeX from reading the PS file to determine
@@ -287,7 +310,7 @@ We reconstructed 3D face models of various celebrities, including George Clooney
      %      }
   %
   \caption{\label{fig:groundtruth}
-           Distance visualization between a ground truth 3D face acquired using a Kinect 3D scanner, and reconstructed faces without (left) and with (right) the silhouette constraints. Red indicates larger distances and green smaller ones. Using silhouette constraints leads to smaller errors in particular in the area around the nose. The range of the distance is 0-20mm from green to red.}
+           Distance visualization between a ground truth 3D face acquired using a Kinect 3D scanner, and reconstructed faces without (left) and with (right) the silhouette constraints. Red indicates larger distances and green smaller ones. Using silhouette constraints leads to smaller errors in particular in the area around the nose. The range of the distance is 0-20mm from green to red. The 1st column are the results from ~\cite{Roth:2015:UFR}, the 2nd column are our results. }
 \end{figure}
 
 %From the result in Figure~\ref{fig:all} we can see, compared with the previous method, our result has obvious improvement on the nose and the chin, as well as the eyes. In each iteration, the mesh is closer and closer to the real geometry, then the 3D face has better correspondence to images. A good correspondence is vital to create the reflectance intensity matrix $M$. The normals to reconstruct face is mainly from photometric stereo approach. Except the nose and chin, the silhouette constraint can improve the whole face quality.
@@ -320,19 +343,60 @@ This work was supported by Swiss National Science Foundation 200021$\_$156253.
 \begin{figure*}[tbp]
   \centering
   %\mbox{} \hfill
-  % the following command controls the width of the embedded PS file
-  % (relative to the width of the current column)
-  \includegraphics[width=.9\linewidth]{figures/all.png}
+
+ % \includegraphics[width=.9\linewidth]{figures/all.png}
   % replacing the above command with the one below will explicitly set
   % the bounding box of the PS figure to the rectangle (xl,yl),(xh,yh).
   % It will also prevent LaTeX from reading the PS file to determine
   % the bounding box (i.e., it will speed up the compilation process)
   % \includegraphics[width=.3\linewidth, bb=39 696 126 756]{sampleFig}
   %
+ 
+   \includegraphics[height=.21\linewidth,width=.15\linewidth,trim=0  -20 0 0]{figures/exp/cf_front.jpg}  
+  \includegraphics[height=.21\linewidth,width=.15\linewidth,trim=130  -40 100 0,clip]{figures/exp/cf_roth_front.eps}  
+  \includegraphics[height=.21\linewidth,width=.15\linewidth,trim=130  -40 100 0,clip]{figures/exp/cf_front.eps}    
+  \includegraphics[height=.21\linewidth,width=.15\linewidth,trim=0  -20 0 0]{figures/exp/cf_profile.jpg}
+  \includegraphics[height=.21\linewidth,width=.15\linewidth,trim=0  -20 0 0]{figures/exp/cf_roth_profile.png}  
+   \includegraphics[height=.21\linewidth,width=.15\linewidth,trim=130  -40 90 0,clip]{figures/exp/cf_profile.eps}  
+   
+      \includegraphics[height=.21\linewidth,width=.15\linewidth,,trim=0  -20 0 0]{figures/exp/ed_front.jpg}  
+  \includegraphics[height=.21\linewidth,width=.15\linewidth,,trim=130  -40 90 -10,clip]{figures/exp/ed_roth_front.eps}  
+  \includegraphics[height=.21\linewidth,width=.15\linewidth,trim=130  -40 90 0,clip]{figures/exp/ed_front.eps}    
+  \includegraphics[height=.21\linewidth,width=.15\linewidth,,trim=0  -20 0 0]{figures/exp/ed_profile.jpg}
+  \includegraphics[height=.21\linewidth,width=.15\linewidth,,trim=0  -20 0 0]{figures/exp/ed_roth_profile3.png}  
+   \includegraphics[height=.21\linewidth,width=.15\linewidth,trim=130  -40 90 0,clip]{figures/exp/ed_profile.eps}  
+   
+         \includegraphics[height=.21\linewidth,width=.15\linewidth,,trim=0  -20 0 0]{figures/exp/gc_front.jpg}  
+  \includegraphics[height=.21\linewidth,width=.15\linewidth,trim=130  -40 90 0,clip]{figures/exp/gc_roth_front.eps}  
+  \includegraphics[height=.21\linewidth,width=.15\linewidth,trim=130  -40 90 0,clip]{figures/exp/gc_front.eps}    
+  \includegraphics[height=.21\linewidth,width=.15\linewidth,,trim=0  -20 0 0]{figures/exp/gc_profile.jpg}
+  \includegraphics[height=.21\linewidth,width=.15\linewidth,,trim=0  -20 0 0]{figures/exp/gc_roth_profile.png}  
+   \includegraphics[height=.21\linewidth,width=.15\linewidth,trim=130  -40 90 0,clip]{figures/exp/gc_profile.eps}  
+   
+   
+         \includegraphics[height=.21\linewidth,width=.15\linewidth,,trim=0  -10 0 0]{figures/exp/tc_front.jpg}  
+  \includegraphics[height=.21\linewidth,width=.15\linewidth,trim=130  -40 90 -10,clip]{figures/exp/tc_roth_front.eps}  
+  \includegraphics[height=.21\linewidth,width=.15\linewidth,trim=130  -40 90 0,clip]{figures/exp/tc_front.eps}    
+  \includegraphics[height=.21\linewidth,width=.15\linewidth,,trim=0  -20 0 0]{figures/exp/tc_profile.jpg}
+  \includegraphics[height=.21\linewidth,width=.15\linewidth,,trim=0  -20 0 0]{figures/exp/tc_roth_profile.png}  
+   \includegraphics[height=.21\linewidth,width=.15\linewidth,trim=130  -40 90 0,clip]{figures/exp/tc_profile.eps}  
+   
+   \includegraphics[height=.21\linewidth,width=.15\linewidth,,trim=0  -20 0 0]{figures/exp/wm_front.jpg}  
+  \includegraphics[height=.21\linewidth,width=.15\linewidth,trim=130  -40 90 0,clip]{figures/exp/wm_roth_front.eps}  
+  \includegraphics[height=.21\linewidth,width=.15\linewidth,trim=130  -40 90 0,clip]{figures/exp/wm_front.eps}    
+  \includegraphics[height=.21\linewidth,width=.15\linewidth,trim=0  -20 0 0]{figures/exp/wm_profile.jpg}
+  \includegraphics[height=.20\linewidth,width=.15\linewidth,,trim=-10  -20 0 0]{figures/exp/wm_roth_profile2.png}  
+   \includegraphics[height=.21\linewidth,trim=130  -40 90 0,clip]{figures/exp/wm_profile.eps}  
+   
+
+  
   \caption{\label{fig:all}%
-           Comparison results of different individuals between the state of the art technique by Roth et al.~\cite{Roth:2015:UFR} and our approach. In our results, the nose and chin areas generally fit better to the real image. Our results tend to exhibit less oversmoothing and more geometric detail also around the eyes.
+           Comparison results of different individuals between the state of the art technique by Roth et al.~\cite{Roth:2015:UFR} and our approach. The 2nd and 5th column are the results from ~\cite{Roth:2015:UFR}, the 3rd and 6th column are our results.  In our results, the nose and chin areas generally fit better to the real image. Our results tend to exhibit less oversmoothing and more geometric detail also around the eyes.
            \newline
   }
 \end{figure*}
+
+
+
 
 \end{document}

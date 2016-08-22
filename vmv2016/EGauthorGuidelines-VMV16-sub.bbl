@@ -1,0 +1,173 @@
+\newcommand{\etalchar}[1]{$^{#1}$}
+\begin{thebibliography}{\uppercase{WYWS06}}
+
+\bibitem[BWP13]{Bouaziz:2013:OMR}
+\textsc{Bouaziz S., Wang Y., Pauly M.}:
+\newblock Online modeling for realtime facial animation.
+\newblock \emph{ACM Trans. Graph. 32}, 4 (July 2013), 40:1--40:10.
+\newblock URL: \url{http://doi.acm.org/10.1145/2461912.2461976}, \href
+  {http://dx.doi.org/10.1145/2461912.2461976}
+  {\path{doi:10.1145/2461912.2461976}}.
+
+\bibitem[Can86]{Canny86}
+\textsc{Canny J.}:
+\newblock A computational approach to edge detection.
+\newblock In \emph{IEEE Transactions on Pattern Analysis and Machine
+  Intelligence} (June 1986), vol.~8, pp.~679--698.
+
+\bibitem[CBZB15]{Cao:2015:RHF}
+\textsc{Cao C., Bradley D., Zhou K., Beeler T.}:
+\newblock Real-time high-fidelity facial performance capture.
+\newblock \emph{ACM Trans. Graph. 34}, 4 (July 2015), 46:1--46:9.
+\newblock URL: \url{http://doi.acm.org/10.1145/2766943}, \href
+  {http://dx.doi.org/10.1145/2766943} {\path{doi:10.1145/2766943}}.
+
+\bibitem[CHZ14]{Cao:2014:DDE}
+\textsc{Cao C., Hou Q., Zhou K.}:
+\newblock Displaced dynamic expression regression for real-time facial tracking
+  and animation.
+\newblock \emph{ACM Trans. Graph. 33}, 4 (July 2014), 43:1--43:10.
+\newblock URL: \url{http://doi.acm.org/10.1145/2601097.2601204}, \href
+  {http://dx.doi.org/10.1145/2601097.2601204}
+  {\path{doi:10.1145/2601097.2601204}}.
+
+\bibitem[CWLZ13]{Cao:2013:SRR}
+\textsc{Cao C., Weng Y., Lin S., Zhou K.}:
+\newblock 3d shape regression for real-time facial animation.
+\newblock \emph{ACM Trans. Graph. 32}, 4 (July 2013), 41:1--41:10.
+\newblock URL: \url{http://doi.acm.org/10.1145/2461912.2462012}, \href
+  {http://dx.doi.org/10.1145/2461912.2462012}
+  {\path{doi:10.1145/2461912.2462012}}.
+
+\bibitem[CWZ{\etalchar{*}}14]{Cao:2014:FWA}
+\textsc{Cao C., Weng Y., Zhou S., Tong Y., Zhou K.}:
+\newblock Facewarehouse: A 3d facial expression database for visual computing.
+\newblock \emph{IEEE Transactions on Visualization and Computer Graphics 20}, 3
+  (March 2014), 413--425.
+\newblock \href {http://dx.doi.org/10.1109/TVCG.2013.249}
+  {\path{doi:10.1109/TVCG.2013.249}}.
+
+\bibitem[JRL15]{Roth15}
+\textsc{J.~Roth Y. Y.~T., Liu X.~M.}:
+\newblock Unconstrained 3d face reconstruction.
+\newblock In \emph{CVPR} (Jun 2015), pp.~2606 -- 2615.
+
+\bibitem[KS14]{kazemi2014one}
+\textsc{Kazemi V., Sullivan J.}:
+\newblock One millisecond face alignment with an ensemble of regression trees.
+\newblock In \emph{CVPR} (2014).
+
+\bibitem[KSS11a]{Kemelmacher-Shlizerman:2011:FRW}
+\textsc{Kemelmacher-Shlizerman I., Seitz S.~M.}:
+\newblock Face reconstruction in the wild.
+\newblock In \emph{Proceedings of the 2011 International Conference on Computer
+  Vision} (Washington, DC, USA, 2011), ICCV '11, IEEE Computer Society,
+  pp.~1746--1753.
+\newblock URL: \url{http://dx.doi.org/10.1109/ICCV.2011.6126439}, \href
+  {http://dx.doi.org/10.1109/ICCV.2011.6126439}
+  {\path{doi:10.1109/ICCV.2011.6126439}}.
+
+\bibitem[KSS11b]{Ira11}
+\textsc{Kemelmacher-Shlizermanand I., Seitz S.}:
+\newblock Face reconstruction in the wild.
+\newblock In \emph{ICCV '11 Proceedings of the 2011 International Conference on
+  Computer Vision} (Jun 2011), pp.~1746--1753.
+
+\bibitem[LC05]{Liu:2005:PFR}
+\textsc{Liu X., Chen T.}:
+\newblock Pose-robust face recognition using geometry assisted probabilistic
+  modeling.
+\newblock In \emph{2005 IEEE Computer Society Conference on Computer Vision and
+  Pattern Recognition (CVPR'05)} (June 2005), vol.~1, pp.~502--509 vol. 1.
+\newblock \href {http://dx.doi.org/10.1109/CVPR.2005.276}
+  {\path{doi:10.1109/CVPR.2005.276}}.
+
+\bibitem[LYYB13]{Li:2013:RFA}
+\textsc{Li H., Yu J., Ye Y., Bregler C.}:
+\newblock Realtime facial animation with on-the-fly correctives.
+\newblock \emph{ACM Trans. Graph. 32}, 4 (July 2013), 42:1--42:10.
+\newblock URL: \url{http://doi.acm.org/10.1145/2461912.2462019}, \href
+  {http://dx.doi.org/10.1145/2461912.2462019}
+  {\path{doi:10.1145/2461912.2462019}}.
+
+\bibitem[LZS04]{Zhang04}
+\textsc{L.~Zhang N.~Snavely B.~C., Seitz S.~M.}:
+\newblock Spacetime faces: high resolution capture for modeling and animation.
+\newblock \emph{ACM Trans. Graph 23} (Aug. 2004), 548--558.
+
+\bibitem[MDSB03]{Meyer2003}
+\textsc{Meyer M., Desbrun M., Schr{\"o}der P., Barr A.~H.}:
+\newblock \emph{Discrete Differential-Geometry Operators for Triangulated
+  2-Manifolds}.
+\newblock Springer Berlin Heidelberg, Berlin, Heidelberg, 2003, pp.~35--57.
+\newblock URL: \url{http://dx.doi.org/10.1007/978-3-662-05105-4_2}, \href
+  {http://dx.doi.org/10.1007/978-3-662-05105-4_2}
+  {\path{doi:10.1007/978-3-662-05105-4_2}}.
+
+\bibitem[RTL15]{Roth:2015:UFR}
+\textsc{Roth J., Tong Y., Liu X.}:
+\newblock Unconstrained 3d face reconstruction.
+\newblock In \emph{2015 IEEE Conference on Computer Vision and Pattern
+  Recognition (CVPR)} (June 2015), pp.~2606--2615.
+\newblock \href {http://dx.doi.org/10.1109/CVPR.2015.7298876}
+  {\path{doi:10.1109/CVPR.2015.7298876}}.
+
+\bibitem[SCOL{\etalchar{*}}04]{Sorkine:2004:LSE}
+\textsc{Sorkine O., Cohen-Or D., Lipman Y., Alexa M., R\"{o}ssl C., Seidel
+  H.-P.}:
+\newblock Laplacian surface editing.
+\newblock In \emph{Proceedings of the 2004 Eurographics/ACM SIGGRAPH Symposium
+  on Geometry Processing} (New York, NY, USA, 2004), SGP '04, ACM,
+  pp.~175--184.
+\newblock URL: \url{http://doi.acm.org/10.1145/1057432.1057456}, \href
+  {http://dx.doi.org/10.1145/1057432.1057456}
+  {\path{doi:10.1145/1057432.1057456}}.
+
+\bibitem[SKSS14]{Suwajanakorn2014}
+\textsc{Suwajanakorn S., Kemelmacher-Shlizerman I., Seitz S.~M.}:
+\newblock \emph{Total Moving Face Reconstruction}.
+\newblock Springer International Publishing, Cham, 2014, pp.~796--812.
+\newblock URL: \url{http://dx.doi.org/10.1007/978-3-319-10593-2_52}, \href
+  {http://dx.doi.org/10.1007/978-3-319-10593-2_52}
+  {\path{doi:10.1007/978-3-319-10593-2_52}}.
+
+\bibitem[WBLP11]{Weise:2011:RPF}
+\textsc{Weise T., Bouaziz S., Li H., Pauly M.}:
+\newblock Realtime performance-based facial animation.
+\newblock \emph{ACM Trans. Graph. 30}, 4 (July 2011), 77:1--77:10.
+\newblock URL: \url{http://doi.acm.org/10.1145/2010324.1964972}, \href
+  {http://dx.doi.org/10.1145/2010324.1964972}
+  {\path{doi:10.1145/2010324.1964972}}.
+
+\bibitem[WYWS06]{Wang:2006:FER}
+\textsc{Wang J., Yin L., Wei X., Sun Y.}:
+\newblock 3d facial expression recognition based on primitive surface feature
+  distribution.
+\newblock In \emph{2006 IEEE Computer Society Conference on Computer Vision and
+  Pattern Recognition (CVPR'06)} (2006), vol.~2, pp.~1399--1406.
+\newblock \href {http://dx.doi.org/10.1109/CVPR.2006.14}
+  {\path{doi:10.1109/CVPR.2006.14}}.
+
+\bibitem[YLYL13a]{Zan:2013:LCM}
+\textsc{Yan J., Lei Z., Yi D., Li S.~Z.}:
+\newblock Learn to combine multiple hypotheses for accurate face alignment.
+\newblock In \emph{Computer Vision Workshops (ICCVW), 2013 IEEE International
+  Conference on} (Dec 2013), pp.~392--396.
+\newblock \href {http://dx.doi.org/10.1109/ICCVW.2013.126}
+  {\path{doi:10.1109/ICCVW.2013.126}}.
+
+\bibitem[YLYL13b]{Yan:2013:LCM}
+\textsc{Yan J., Lei Z., Yi D., Li S.~Z.}:
+\newblock Learn to combine multiple hypotheses for accurate face alignment.
+\newblock In \emph{Computer Vision Workshops (ICCVW), 2013 IEEE International
+  Conference on} (Dec 2013), pp.~392--396.
+\newblock \href {http://dx.doi.org/10.1109/ICCVW.2013.126}
+  {\path{doi:10.1109/ICCVW.2013.126}}.
+
+\bibitem[ZLM09]{Lin09}
+\textsc{Z.~Lin M.~C., Ma Y.}:
+\newblock The augmented lagrange multiplier method for exact recovery of
+  corrupted low-rand matrices.
+\newblock In \emph{Technical Report UILU-ENG-09-2215} (2009).
+
+\end{thebibliography}

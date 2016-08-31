@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2014) (preloaded format=pdflatex 2014.5.25)  22 AUG 2016 01:00
+This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2014) (preloaded format=pdflatex 2014.5.25)  31 AUG 2016 11:08
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -457,26 +457,27 @@ File: figures/teaser/roth_bw_front-eps-converted-to.pdf Graphic file (type pdf)
 Package pdftex.def Info: figures/teaser/roth_bw_front-eps-converted-to.pdf used
  on input line 62.
 (pdftex.def)             Requested size: 75.59315pt x 105.84183pt.
-Package epstopdf Info: Source file: <figures/teaser/roth_bw_front.eps>
-(epstopdf)                    date: 2016-08-21 22:09:58
-(epstopdf)                    size: 335913 bytes
-(epstopdf)             Output file: <figures/teaser/roth_bw_front-eps-converted
--to.pdf>
-(epstopdf)                    date: 2016-08-21 22:18:55
-(epstopdf)                    size: 133394 bytes
-(epstopdf)             Command: <repstopdf --outfile=figures/teaser/roth_bw_fro
-nt-eps-converted-to.pdf figures/teaser/roth_bw_front.eps>
+Package epstopdf Info: Source file: <figures/teaser/bw_front.eps>
+(epstopdf)                    date: 2016-08-20 17:14:33
+(epstopdf)                    size: 373120 bytes
+(epstopdf)             Output file: <figures/teaser/bw_front-eps-converted-to.p
+df>
+(epstopdf)                    date: 2016-08-21 16:15:12
+(epstopdf)                    size: 144587 bytes
+(epstopdf)             Command: <repstopdf --outfile=figures/teaser/bw_front-ep
+s-converted-to.pdf figures/teaser/bw_front.eps>
 (epstopdf)             \includegraphics on input line 62.
 Package epstopdf Info: Output file is already uptodate.
-File: figures/teaser/roth_bw_front-eps-converted-to.pdf Graphic file (type pdf)
 
+<figures/teaser/bw_front-eps-converted-to.pdf, id=7, 578.16pt x 433.62pt>
+File: figures/teaser/bw_front-eps-converted-to.pdf Graphic file (type pdf)
 
-<use figures/teaser/roth_bw_front-eps-converted-to.pdf>
-Package pdftex.def Info: figures/teaser/roth_bw_front-eps-converted-to.pdf used
- on input line 62.
+<use figures/teaser/bw_front-eps-converted-to.pdf>
+Package pdftex.def Info: figures/teaser/bw_front-eps-converted-to.pdf used on i
+nput line 62.
 (pdftex.def)             Requested size: 75.59315pt x 105.84183pt.
 
-<figures/teaser/bw_profile.jpg, id=8, 154.5775pt x 218.8175pt>
+<figures/teaser/bw_profile.jpg, id=9, 154.5775pt x 218.8175pt>
 File: figures/teaser/bw_profile.jpg Graphic file (type jpg)
 
 <use figures/teaser/bw_profile.jpg>
@@ -494,8 +495,8 @@ file-eps-converted-to.pdf figures/teaser/roth_bw_profile.eps>
 (epstopdf)             \includegraphics on input line 62.
 Package epstopdf Info: Output file is already uptodate.
 
-<figures/teaser/roth_bw_profile-eps-converted-to.pdf, id=9, 578.16pt x 433.62pt
->
+<figures/teaser/roth_bw_profile-eps-converted-to.pdf, id=10, 578.16pt x 433.62p
+t>
 File: figures/teaser/roth_bw_profile-eps-converted-to.pdf Graphic file (type pd
 f)
  <use figures/teaser/roth_bw_profile-eps-converted-to.pdf>
@@ -514,7 +515,7 @@ eps-converted-to.pdf figures/teaser/bw_profile.eps>
 (epstopdf)             \includegraphics on input line 62.
 Package epstopdf Info: Output file is already uptodate.
 
-<figures/teaser/bw_profile-eps-converted-to.pdf, id=11, 578.16pt x 433.62pt>
+<figures/teaser/bw_profile-eps-converted-to.pdf, id=12, 578.16pt x 433.62pt>
 File: figures/teaser/bw_profile-eps-converted-to.pdf Graphic file (type pdf)
 
 <use figures/teaser/bw_profile-eps-converted-to.pdf>
@@ -529,22 +530,23 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
  [1{/usr/local/texlive/2014/texmf-var/fonts/map/pdftex/updmap/pdftex.map}
 
 
- <./figures/teaser/roth_bw_front-eps-converted-to.pdf> <./figures/teaser/roth_b
-w_profile-eps-converted-to.pdf> <./figures/teaser/bw_profile-eps-converted-to.p
-df> <./figures/teaser/bw_front.jpg> <./figures/teaser/bw_profile.jpg>]
+ <./figures/teaser/roth_bw_front-eps-converted-to.pdf> <./figures/teaser/bw_fro
+nt-eps-converted-to.pdf> <./figures/teaser/roth_bw_profile-eps-converted-to.pdf
+> <./figures/teaser/bw_profile-eps-converted-to.pdf> <./figures/teaser/bw_front
+.jpg> <./figures/teaser/bw_profile.jpg>]
 Underfull \hbox (badness 1874) in paragraph at lines 118--119
  \T1/ptm/b/n/9 Pho-to-met-ric Nor-mals. \T1/ptm/m/n/9 Next, a pho-to-met-ric st
 ereo tech-nique
  []
 
-[2] [3] <figures/ite_th.jpg, id=158, 2233.34375pt x 800.9925pt>
+[2] [3] <figures/ite_th.jpg, id=167, 2233.34375pt x 800.9925pt>
 File: figures/ite_th.jpg Graphic file (type jpg)
 
 <use figures/ite_th.jpg>
 Package pdftex.def Info: figures/ite_th.jpg used on input line 250.
 (pdftex.def)             Requested size: 240.0pt x 86.06834pt.
 
-<figures/sil_all3.jpg, id=161, 1761.58125pt x 762.85pt>
+<figures/sil_all3.jpg, id=170, 1761.58125pt x 762.85pt>
 File: figures/sil_all3.jpg Graphic file (type jpg)
 
 <use figures/sil_all3.jpg>
@@ -564,7 +566,7 @@ ttila_front2-eps-converted-to.pdf figures/groundtruth/roth_attila_front2.eps>
 (epstopdf)             \includegraphics on input line 284.
 Package epstopdf Info: Output file is already uptodate.
 
-<figures/groundtruth/roth_attila_front2-eps-converted-to.pdf, id=179, 578.16pt 
+<figures/groundtruth/roth_attila_front2-eps-converted-to.pdf, id=188, 578.16pt 
 x 433.62pt>
 File: figures/groundtruth/roth_attila_front2-eps-converted-to.pdf Graphic file 
 (type pdf)
@@ -584,7 +586,7 @@ _front-eps-converted-to.pdf figures/groundtruth/attila_front.eps>
 (epstopdf)             \includegraphics on input line 285.
 Package epstopdf Info: Output file is already uptodate.
 
-<figures/groundtruth/attila_front-eps-converted-to.pdf, id=181, 578.16pt x 433.
+<figures/groundtruth/attila_front-eps-converted-to.pdf, id=190, 578.16pt x 433.
 62pt>
 File: figures/groundtruth/attila_front-eps-converted-to.pdf Graphic file (type 
 pdf)
@@ -604,7 +606,7 @@ _front-eps-converted-to.pdf figures/groundtruth/exp_gt_front.eps>
 (epstopdf)             \includegraphics on input line 286.
 Package epstopdf Info: Output file is already uptodate.
 
-<figures/groundtruth/exp_gt_front-eps-converted-to.pdf, id=183, 578.16pt x 433.
+<figures/groundtruth/exp_gt_front-eps-converted-to.pdf, id=192, 578.16pt x 433.
 62pt>
 File: figures/groundtruth/exp_gt_front-eps-converted-to.pdf Graphic file (type 
 pdf)
@@ -626,7 +628,7 @@ s>
 (epstopdf)             \includegraphics on input line 288.
 Package epstopdf Info: Output file is already uptodate.
 
-<figures/groundtruth/roth_attila_profile2-eps-converted-to.pdf, id=185, 578.16p
+<figures/groundtruth/roth_attila_profile2-eps-converted-to.pdf, id=194, 578.16p
 t x 433.62pt>
 File: figures/groundtruth/roth_attila_profile2-eps-converted-to.pdf Graphic fil
 e (type pdf)
@@ -647,7 +649,7 @@ _profile-eps-converted-to.pdf figures/groundtruth/attila_profile.eps>
 (epstopdf)             \includegraphics on input line 289.
 Package epstopdf Info: Output file is already uptodate.
 
-<figures/groundtruth/attila_profile-eps-converted-to.pdf, id=187, 578.16pt x 43
+<figures/groundtruth/attila_profile-eps-converted-to.pdf, id=196, 578.16pt x 43
 3.62pt>
 File: figures/groundtruth/attila_profile-eps-converted-to.pdf Graphic file (typ
 e pdf)
@@ -667,7 +669,7 @@ _profile-eps-converted-to.pdf figures/groundtruth/exp_gt_profile.eps>
 (epstopdf)             \includegraphics on input line 290.
 Package epstopdf Info: Output file is already uptodate.
 
-<figures/groundtruth/exp_gt_profile-eps-converted-to.pdf, id=189, 578.16pt x 43
+<figures/groundtruth/exp_gt_profile-eps-converted-to.pdf, id=198, 578.16pt x 43
 3.62pt>
 File: figures/groundtruth/exp_gt_profile-eps-converted-to.pdf Graphic file (typ
 e pdf)
@@ -688,7 +690,7 @@ ttila_front-eps-converted-to.pdf figures/groundtruth/roth_attila_front.eps>
 (epstopdf)             \includegraphics on input line 292.
 Package epstopdf Info: Output file is already uptodate.
 
-<figures/groundtruth/roth_attila_front-eps-converted-to.pdf, id=191, 578.16pt x
+<figures/groundtruth/roth_attila_front-eps-converted-to.pdf, id=200, 578.16pt x
  433.62pt>
 File: figures/groundtruth/roth_attila_front-eps-converted-to.pdf Graphic file (
 type pdf)
@@ -708,7 +710,7 @@ ont-eps-converted-to.pdf figures/groundtruth/exp_front.eps>
 (epstopdf)             \includegraphics on input line 293.
 Package epstopdf Info: Output file is already uptodate.
 
-<figures/groundtruth/exp_front-eps-converted-to.pdf, id=193, 578.16pt x 433.62p
+<figures/groundtruth/exp_front-eps-converted-to.pdf, id=202, 578.16pt x 433.62p
 t>
 File: figures/groundtruth/exp_front-eps-converted-to.pdf Graphic file (type pdf
 )
@@ -717,7 +719,7 @@ Package pdftex.def Info: figures/groundtruth/exp_front-eps-converted-to.pdf use
 d on input line 293.
 (pdftex.def)             Requested size: 71.99582pt x 98.39804pt.
 
-<figures/groundtruth/colorbar.png, id=195, 176.66pt x 552.0625pt>
+<figures/groundtruth/colorbar.png, id=204, 176.66pt x 552.0625pt>
 File: figures/groundtruth/colorbar.png Graphic file (type png)
 
 <use figures/groundtruth/colorbar.png>
@@ -791,7 +793,7 @@ Underfull \hbox (badness 1874) in paragraph at lines 143--143
 . Graph. 30\T1/ptm/m/n/8 , 4
  []
 
-) <figures/exp/cf_front.jpg, id=341, 204.765pt x 281.05pt>
+) <figures/exp/cf_front.jpg, id=350, 204.765pt x 281.05pt>
 File: figures/exp/cf_front.jpg Graphic file (type jpg)
 
 <use figures/exp/cf_front.jpg>
@@ -809,7 +811,7 @@ eps-converted-to.pdf figures/exp/roth_cf_front.eps>
 (epstopdf)             \includegraphics on input line 357.
 Package epstopdf Info: Output file is already uptodate.
 
-<figures/exp/roth_cf_front-eps-converted-to.pdf, id=342, 578.16pt x 433.62pt>
+<figures/exp/roth_cf_front-eps-converted-to.pdf, id=351, 578.16pt x 433.62pt>
 File: figures/exp/roth_cf_front-eps-converted-to.pdf Graphic file (type pdf)
 
 <use figures/exp/roth_cf_front-eps-converted-to.pdf>
@@ -821,14 +823,18 @@ Package epstopdf Info: Source file: <figures/exp/cf_front.eps>
 (epstopdf)                    size: 371129 bytes
 (epstopdf)             Output file: <figures/exp/cf_front-eps-converted-to.pdf>
 
-(epstopdf)                    date: 2016-08-21 16:22:56
-(epstopdf)                    size: 160047 bytes
 (epstopdf)             Command: <repstopdf --outfile=figures/exp/cf_front-eps-c
 onverted-to.pdf figures/exp/cf_front.eps>
 (epstopdf)             \includegraphics on input line 358.
-Package epstopdf Info: Output file is already uptodate.
+runsystem(repstopdf --outfile=figures/exp/cf_front-eps-converted-to.pdf figures
+/exp/cf_front.eps)...executed safely (allowed).
 
-<figures/exp/cf_front-eps-converted-to.pdf, id=344, 578.16pt x 433.62pt>
+Package epstopdf Info: Result file: <figures/exp/cf_front-eps-converted-to.pdf>
+
+(epstopdf)                    date: 2016-08-31 11:08:26
+(epstopdf)                    size: 160047 bytes.
+
+<figures/exp/cf_front-eps-converted-to.pdf, id=353, 578.16pt x 433.62pt>
 File: figures/exp/cf_front-eps-converted-to.pdf Graphic file (type pdf)
 
 <use figures/exp/cf_front-eps-converted-to.pdf>
@@ -836,7 +842,7 @@ Package pdftex.def Info: figures/exp/cf_front-eps-converted-to.pdf used on inpu
 t line 358.
 (pdftex.def)             Requested size: 75.59476pt x 105.84183pt.
 
-<figures/exp/cf_profile.jpg, id=346, 303.1325pt x 409.53pt>
+<figures/exp/cf_profile.jpg, id=355, 303.1325pt x 409.53pt>
 File: figures/exp/cf_profile.jpg Graphic file (type jpg)
 
 <use figures/exp/cf_profile.jpg>
@@ -854,7 +860,7 @@ e-eps-converted-to.pdf figures/exp/roth_cf_profile.eps>
 (epstopdf)             \includegraphics on input line 360.
 Package epstopdf Info: Output file is already uptodate.
 
-<figures/exp/roth_cf_profile-eps-converted-to.pdf, id=347, 578.16pt x 433.62pt>
+<figures/exp/roth_cf_profile-eps-converted-to.pdf, id=356, 578.16pt x 433.62pt>
 File: figures/exp/roth_cf_profile-eps-converted-to.pdf Graphic file (type pdf)
 <use figures/exp/roth_cf_profile-eps-converted-to.pdf>
 Package pdftex.def Info: figures/exp/roth_cf_profile-eps-converted-to.pdf used 
@@ -872,7 +878,7 @@ f>
 (epstopdf)             \includegraphics on input line 361.
 Package epstopdf Info: Output file is already uptodate.
 
-<figures/exp/cf_profile-eps-converted-to.pdf, id=349, 578.16pt x 433.62pt>
+<figures/exp/cf_profile-eps-converted-to.pdf, id=358, 578.16pt x 433.62pt>
 File: figures/exp/cf_profile-eps-converted-to.pdf Graphic file (type pdf)
 
 <use figures/exp/cf_profile-eps-converted-to.pdf>
@@ -880,7 +886,7 @@ Package pdftex.def Info: figures/exp/cf_profile-eps-converted-to.pdf used on in
 put line 361.
 (pdftex.def)             Requested size: 75.59315pt x 105.84183pt.
 
-<figures/exp/ed_front.jpg, id=351, 244.915pt x 335.2525pt>
+<figures/exp/ed_front.jpg, id=360, 244.915pt x 335.2525pt>
 File: figures/exp/ed_front.jpg Graphic file (type jpg)
 
 <use figures/exp/ed_front.jpg>
@@ -898,7 +904,7 @@ eps-converted-to.pdf figures/exp/roth_ed_front.eps>
 (epstopdf)             \includegraphics on input line 364.
 Package epstopdf Info: Output file is already uptodate.
 
-<figures/exp/roth_ed_front-eps-converted-to.pdf, id=352, 578.16pt x 433.62pt>
+<figures/exp/roth_ed_front-eps-converted-to.pdf, id=361, 578.16pt x 433.62pt>
 File: figures/exp/roth_ed_front-eps-converted-to.pdf Graphic file (type pdf)
 
 <use figures/exp/roth_ed_front-eps-converted-to.pdf>
@@ -917,7 +923,7 @@ onverted-to.pdf figures/exp/ed_front.eps>
 (epstopdf)             \includegraphics on input line 365.
 Package epstopdf Info: Output file is already uptodate.
 
-<figures/exp/ed_front-eps-converted-to.pdf, id=354, 578.16pt x 433.62pt>
+<figures/exp/ed_front-eps-converted-to.pdf, id=363, 578.16pt x 433.62pt>
 File: figures/exp/ed_front-eps-converted-to.pdf Graphic file (type pdf)
 
 <use figures/exp/ed_front-eps-converted-to.pdf>
@@ -925,7 +931,7 @@ Package pdftex.def Info: figures/exp/ed_front-eps-converted-to.pdf used on inpu
 t line 365.
 (pdftex.def)             Requested size: 75.59315pt x 105.84183pt.
 
-<figures/exp/ed_profile.jpg, id=356, 372.39125pt x 498.86375pt>
+<figures/exp/ed_profile.jpg, id=365, 372.39125pt x 498.86375pt>
 File: figures/exp/ed_profile.jpg Graphic file (type jpg)
 
 <use figures/exp/ed_profile.jpg>
@@ -943,7 +949,7 @@ e-eps-converted-to.pdf figures/exp/roth_ed_profile.eps>
 (epstopdf)             \includegraphics on input line 367.
 Package epstopdf Info: Output file is already uptodate.
 
-<figures/exp/roth_ed_profile-eps-converted-to.pdf, id=357, 578.16pt x 433.62pt>
+<figures/exp/roth_ed_profile-eps-converted-to.pdf, id=366, 578.16pt x 433.62pt>
 File: figures/exp/roth_ed_profile-eps-converted-to.pdf Graphic file (type pdf)
 <use figures/exp/roth_ed_profile-eps-converted-to.pdf>
 Package pdftex.def Info: figures/exp/roth_ed_profile-eps-converted-to.pdf used 
@@ -961,7 +967,7 @@ f>
 (epstopdf)             \includegraphics on input line 368.
 Package epstopdf Info: Output file is already uptodate.
 
-<figures/exp/ed_profile-eps-converted-to.pdf, id=359, 578.16pt x 433.62pt>
+<figures/exp/ed_profile-eps-converted-to.pdf, id=368, 578.16pt x 433.62pt>
 File: figures/exp/ed_profile-eps-converted-to.pdf Graphic file (type pdf)
 
 <use figures/exp/ed_profile-eps-converted-to.pdf>
@@ -969,7 +975,7 @@ Package pdftex.def Info: figures/exp/ed_profile-eps-converted-to.pdf used on in
 put line 368.
 (pdftex.def)             Requested size: 75.59315pt x 105.84183pt.
 
-<figures/exp/gc_front.jpg, id=361, 400.49625pt x 529.98pt>
+<figures/exp/gc_front.jpg, id=370, 400.49625pt x 529.98pt>
 File: figures/exp/gc_front.jpg Graphic file (type jpg)
 
 <use figures/exp/gc_front.jpg>
@@ -987,7 +993,7 @@ eps-converted-to.pdf figures/exp/roth_gc_front.eps>
 (epstopdf)             \includegraphics on input line 371.
 Package epstopdf Info: Output file is already uptodate.
 
-<figures/exp/roth_gc_front-eps-converted-to.pdf, id=362, 578.16pt x 433.62pt>
+<figures/exp/roth_gc_front-eps-converted-to.pdf, id=371, 578.16pt x 433.62pt>
 File: figures/exp/roth_gc_front-eps-converted-to.pdf Graphic file (type pdf)
 
 <use figures/exp/roth_gc_front-eps-converted-to.pdf>
@@ -1006,7 +1012,7 @@ onverted-to.pdf figures/exp/gc_front.eps>
 (epstopdf)             \includegraphics on input line 372.
 Package epstopdf Info: Output file is already uptodate.
 
-<figures/exp/gc_front-eps-converted-to.pdf, id=364, 578.16pt x 433.62pt>
+<figures/exp/gc_front-eps-converted-to.pdf, id=373, 578.16pt x 433.62pt>
 File: figures/exp/gc_front-eps-converted-to.pdf Graphic file (type pdf)
 
 <use figures/exp/gc_front-eps-converted-to.pdf>
@@ -1014,7 +1020,7 @@ Package pdftex.def Info: figures/exp/gc_front-eps-converted-to.pdf used on inpu
 t line 372.
 (pdftex.def)             Requested size: 75.59315pt x 105.84183pt.
 
-<figures/exp/gc_profile.jpg, id=366, 130.4875pt x 160.6pt>
+<figures/exp/gc_profile.jpg, id=375, 130.4875pt x 160.6pt>
 File: figures/exp/gc_profile.jpg Graphic file (type jpg)
 
 <use figures/exp/gc_profile.jpg>
@@ -1032,7 +1038,7 @@ e-eps-converted-to.pdf figures/exp/roth_gc_profile.eps>
 (epstopdf)             \includegraphics on input line 374.
 Package epstopdf Info: Output file is already uptodate.
 
-<figures/exp/roth_gc_profile-eps-converted-to.pdf, id=367, 578.16pt x 433.62pt>
+<figures/exp/roth_gc_profile-eps-converted-to.pdf, id=376, 578.16pt x 433.62pt>
 File: figures/exp/roth_gc_profile-eps-converted-to.pdf Graphic file (type pdf)
 <use figures/exp/roth_gc_profile-eps-converted-to.pdf>
 Package pdftex.def Info: figures/exp/roth_gc_profile-eps-converted-to.pdf used 
@@ -1050,7 +1056,7 @@ f>
 (epstopdf)             \includegraphics on input line 375.
 Package epstopdf Info: Output file is already uptodate.
 
-<figures/exp/gc_profile-eps-converted-to.pdf, id=369, 578.16pt x 433.62pt>
+<figures/exp/gc_profile-eps-converted-to.pdf, id=378, 578.16pt x 433.62pt>
 File: figures/exp/gc_profile-eps-converted-to.pdf Graphic file (type pdf)
 
 <use figures/exp/gc_profile-eps-converted-to.pdf>
@@ -1058,7 +1064,7 @@ Package pdftex.def Info: figures/exp/gc_profile-eps-converted-to.pdf used on in
 put line 375.
 (pdftex.def)             Requested size: 75.59476pt x 105.84183pt.
 
-<figures/exp/tc_front.jpg, id=371, 137.51375pt x 186.6975pt>
+<figures/exp/tc_front.jpg, id=380, 137.51375pt x 186.6975pt>
 File: figures/exp/tc_front.jpg Graphic file (type jpg)
 
 <use figures/exp/tc_front.jpg>
@@ -1076,7 +1082,7 @@ eps-converted-to.pdf figures/exp/roth_tc_front.eps>
 (epstopdf)             \includegraphics on input line 379.
 Package epstopdf Info: Output file is already uptodate.
 
-<figures/exp/roth_tc_front-eps-converted-to.pdf, id=372, 578.16pt x 433.62pt>
+<figures/exp/roth_tc_front-eps-converted-to.pdf, id=381, 578.16pt x 433.62pt>
 File: figures/exp/roth_tc_front-eps-converted-to.pdf Graphic file (type pdf)
 
 <use figures/exp/roth_tc_front-eps-converted-to.pdf>
@@ -1095,7 +1101,7 @@ onverted-to.pdf figures/exp/tc_front.eps>
 (epstopdf)             \includegraphics on input line 380.
 Package epstopdf Info: Output file is already uptodate.
 
-<figures/exp/tc_front-eps-converted-to.pdf, id=374, 578.16pt x 433.62pt>
+<figures/exp/tc_front-eps-converted-to.pdf, id=383, 578.16pt x 433.62pt>
 File: figures/exp/tc_front-eps-converted-to.pdf Graphic file (type pdf)
 
 <use figures/exp/tc_front-eps-converted-to.pdf>
@@ -1103,7 +1109,7 @@ Package pdftex.def Info: figures/exp/tc_front-eps-converted-to.pdf used on inpu
 t line 380.
 (pdftex.def)             Requested size: 75.59315pt x 105.84183pt.
 
-<figures/exp/tc_profile.jpg, id=376, 370.38374pt x 510.90875pt>
+<figures/exp/tc_profile.jpg, id=385, 370.38374pt x 510.90875pt>
 File: figures/exp/tc_profile.jpg Graphic file (type jpg)
 
 <use figures/exp/tc_profile.jpg>
@@ -1121,7 +1127,7 @@ e-eps-converted-to.pdf figures/exp/roth_tc_profile.eps>
 (epstopdf)             \includegraphics on input line 382.
 Package epstopdf Info: Output file is already uptodate.
 
-<figures/exp/roth_tc_profile-eps-converted-to.pdf, id=377, 578.16pt x 433.62pt>
+<figures/exp/roth_tc_profile-eps-converted-to.pdf, id=386, 578.16pt x 433.62pt>
 File: figures/exp/roth_tc_profile-eps-converted-to.pdf Graphic file (type pdf)
 <use figures/exp/roth_tc_profile-eps-converted-to.pdf>
 Package pdftex.def Info: figures/exp/roth_tc_profile-eps-converted-to.pdf used 
@@ -1139,7 +1145,7 @@ f>
 (epstopdf)             \includegraphics on input line 383.
 Package epstopdf Info: Output file is already uptodate.
 
-<figures/exp/tc_profile-eps-converted-to.pdf, id=379, 578.16pt x 433.62pt>
+<figures/exp/tc_profile-eps-converted-to.pdf, id=388, 578.16pt x 433.62pt>
 File: figures/exp/tc_profile-eps-converted-to.pdf Graphic file (type pdf)
 
 <use figures/exp/tc_profile-eps-converted-to.pdf>
@@ -1147,7 +1153,7 @@ Package pdftex.def Info: figures/exp/tc_profile-eps-converted-to.pdf used on in
 put line 383.
 (pdftex.def)             Requested size: 75.59476pt x 105.84183pt.
 
-<figures/exp/wm_front.jpg, id=381, 281.05pt x 350.30875pt>
+<figures/exp/wm_front.jpg, id=390, 281.05pt x 350.30875pt>
 File: figures/exp/wm_front.jpg Graphic file (type jpg)
 
 <use figures/exp/wm_front.jpg>
@@ -1165,7 +1171,7 @@ eps-converted-to.pdf figures/exp/roth_wm_front.eps>
 (epstopdf)             \includegraphics on input line 386.
 Package epstopdf Info: Output file is already uptodate.
 
-<figures/exp/roth_wm_front-eps-converted-to.pdf, id=382, 578.16pt x 433.62pt>
+<figures/exp/roth_wm_front-eps-converted-to.pdf, id=391, 578.16pt x 433.62pt>
 File: figures/exp/roth_wm_front-eps-converted-to.pdf Graphic file (type pdf)
 
 <use figures/exp/roth_wm_front-eps-converted-to.pdf>
@@ -1184,7 +1190,7 @@ onverted-to.pdf figures/exp/wm_front.eps>
 (epstopdf)             \includegraphics on input line 387.
 Package epstopdf Info: Output file is already uptodate.
 
-<figures/exp/wm_front-eps-converted-to.pdf, id=384, 578.16pt x 433.62pt>
+<figures/exp/wm_front-eps-converted-to.pdf, id=393, 578.16pt x 433.62pt>
 File: figures/exp/wm_front-eps-converted-to.pdf Graphic file (type pdf)
 
 <use figures/exp/wm_front-eps-converted-to.pdf>
@@ -1192,7 +1198,7 @@ Package pdftex.def Info: figures/exp/wm_front-eps-converted-to.pdf used on inpu
 t line 387.
 (pdftex.def)             Requested size: 75.59315pt x 105.84183pt.
 
-<figures/exp/wm_profile.jpg, id=386, 182.6825pt x 231.86626pt>
+<figures/exp/wm_profile.jpg, id=395, 182.6825pt x 231.86626pt>
 File: figures/exp/wm_profile.jpg Graphic file (type jpg)
 
 <use figures/exp/wm_profile.jpg>
@@ -1210,7 +1216,7 @@ e-eps-converted-to.pdf figures/exp/roth_wm_profile.eps>
 (epstopdf)             \includegraphics on input line 389.
 Package epstopdf Info: Output file is already uptodate.
 
-<figures/exp/roth_wm_profile-eps-converted-to.pdf, id=387, 578.16pt x 433.62pt>
+<figures/exp/roth_wm_profile-eps-converted-to.pdf, id=396, 578.16pt x 433.62pt>
 File: figures/exp/roth_wm_profile-eps-converted-to.pdf Graphic file (type pdf)
 <use figures/exp/roth_wm_profile-eps-converted-to.pdf>
 Package pdftex.def Info: figures/exp/roth_wm_profile-eps-converted-to.pdf used 
@@ -1228,7 +1234,7 @@ f>
 (epstopdf)             \includegraphics on input line 390.
 Package epstopdf Info: Output file is already uptodate.
 
-<figures/exp/wm_profile-eps-converted-to.pdf, id=389, 578.16pt x 433.62pt>
+<figures/exp/wm_profile-eps-converted-to.pdf, id=398, 578.16pt x 433.62pt>
 File: figures/exp/wm_profile-eps-converted-to.pdf Graphic file (type pdf)
 
 <use figures/exp/wm_profile-eps-converted-to.pdf>
@@ -1245,7 +1251,7 @@ File: figures/teaser/bw_front.jpg Graphic file (type jpg)
 Package pdftex.def Info: figures/teaser/bw_front.jpg used on input line 402.
 (pdftex.def)             Requested size: 75.60037pt x 105.84227pt.
 
-<figures/teaser/bw_roth_front.png, id=395, 405.515pt x 507.8975pt>
+<figures/teaser/bw_roth_front.png, id=404, 405.515pt x 507.8975pt>
 File: figures/teaser/bw_roth_front.png Graphic file (type png)
 
 <use figures/teaser/bw_roth_front.png>
@@ -1276,7 +1282,7 @@ File: figures/teaser/bw_profile.jpg Graphic file (type jpg)
 Package pdftex.def Info: figures/teaser/bw_profile.jpg used on input line 405.
 (pdftex.def)             Requested size: 75.59975pt x 105.84207pt.
 
-<figures/teaser/bw_roth_profile.png, id=397, 212.795pt x 314.17375pt>
+<figures/teaser/bw_roth_profile.png, id=406, 212.795pt x 314.17375pt>
 File: figures/teaser/bw_roth_profile.png Graphic file (type png)
 
 <use figures/teaser/bw_roth_profile.png>
@@ -1317,7 +1323,7 @@ eps-converted-to.pdf figures/exp/cf_roth_front.eps>
 (epstopdf)             \includegraphics on input line 410.
 Package epstopdf Info: Output file is already uptodate.
 
-<figures/exp/cf_roth_front-eps-converted-to.pdf, id=399, 578.16pt x 433.62pt>
+<figures/exp/cf_roth_front-eps-converted-to.pdf, id=408, 578.16pt x 433.62pt>
 File: figures/exp/cf_roth_front-eps-converted-to.pdf Graphic file (type pdf)
 
 <use figures/exp/cf_roth_front-eps-converted-to.pdf>
@@ -1329,7 +1335,7 @@ Package epstopdf Info: Source file: <figures/exp/cf_front.eps>
 (epstopdf)                    size: 371129 bytes
 (epstopdf)             Output file: <figures/exp/cf_front-eps-converted-to.pdf>
 
-(epstopdf)                    date: 2016-08-21 16:22:56
+(epstopdf)                    date: 2016-08-31 11:08:26
 (epstopdf)                    size: 160047 bytes
 (epstopdf)             Command: <repstopdf --outfile=figures/exp/cf_front-eps-c
 onverted-to.pdf figures/exp/cf_front.eps>
@@ -1347,7 +1353,7 @@ File: figures/exp/cf_profile.jpg Graphic file (type jpg)
 Package pdftex.def Info: figures/exp/cf_profile.jpg used on input line 412.
 (pdftex.def)             Requested size: 75.59792pt x 105.84085pt.
 
-<figures/exp/cf_roth_profile.png, id=402, 322.20375pt x 415.5525pt>
+<figures/exp/cf_roth_profile.png, id=411, 322.20375pt x 415.5525pt>
 File: figures/exp/cf_roth_profile.png Graphic file (type png)
 
 <use figures/exp/cf_roth_profile.png>
@@ -1388,7 +1394,7 @@ eps-converted-to.pdf figures/exp/ed_roth_front.eps>
 (epstopdf)             \includegraphics on input line 417.
 Package epstopdf Info: Output file is already uptodate.
 
-<figures/exp/ed_roth_front-eps-converted-to.pdf, id=404, 578.16pt x 433.62pt>
+<figures/exp/ed_roth_front-eps-converted-to.pdf, id=413, 578.16pt x 433.62pt>
 File: figures/exp/ed_roth_front-eps-converted-to.pdf Graphic file (type pdf)
 
 <use figures/exp/ed_roth_front-eps-converted-to.pdf>
@@ -1418,7 +1424,7 @@ File: figures/exp/ed_profile.jpg Graphic file (type jpg)
 Package pdftex.def Info: figures/exp/ed_profile.jpg used on input line 419.
 (pdftex.def)             Requested size: 75.59633pt x 105.83678pt.
 
-<figures/exp/ed_roth_profile.png, id=407, 201.75375pt x 297.11pt>
+<figures/exp/ed_roth_profile.png, id=416, 201.75375pt x 297.11pt>
 File: figures/exp/ed_roth_profile.png Graphic file (type png)
 
 <use figures/exp/ed_roth_profile.png>
@@ -1459,7 +1465,7 @@ eps-converted-to.pdf figures/exp/gc_roth_front.eps>
 (epstopdf)             \includegraphics on input line 424.
 Package epstopdf Info: Output file is already uptodate.
 
-<figures/exp/gc_roth_front-eps-converted-to.pdf, id=409, 578.16pt x 433.62pt>
+<figures/exp/gc_roth_front-eps-converted-to.pdf, id=418, 578.16pt x 433.62pt>
 File: figures/exp/gc_roth_front-eps-converted-to.pdf Graphic file (type pdf)
 
 <use figures/exp/gc_roth_front-eps-converted-to.pdf>
@@ -1489,7 +1495,7 @@ File: figures/exp/gc_profile.jpg Graphic file (type jpg)
 Package pdftex.def Info: figures/exp/gc_profile.jpg used on input line 426.
 (pdftex.def)             Requested size: 75.59717pt x 105.84471pt.
 
-<figures/exp/gc_roth_profile.png, id=412, 304.13625pt x 432.61626pt>
+<figures/exp/gc_roth_profile.png, id=421, 304.13625pt x 432.61626pt>
 File: figures/exp/gc_roth_profile.png Graphic file (type png)
 
 <use figures/exp/gc_roth_profile.png>
@@ -1530,7 +1536,7 @@ eps-converted-to.pdf figures/exp/tc_roth_front.eps>
 (epstopdf)             \includegraphics on input line 432.
 Package epstopdf Info: Output file is already uptodate.
 
-<figures/exp/tc_roth_front-eps-converted-to.pdf, id=414, 578.16pt x 433.62pt>
+<figures/exp/tc_roth_front-eps-converted-to.pdf, id=423, 578.16pt x 433.62pt>
 File: figures/exp/tc_roth_front-eps-converted-to.pdf Graphic file (type pdf)
 
 <use figures/exp/tc_roth_front-eps-converted-to.pdf>
@@ -1560,7 +1566,7 @@ File: figures/exp/tc_profile.jpg Graphic file (type jpg)
 Package pdftex.def Info: figures/exp/tc_profile.jpg used on input line 434.
 (pdftex.def)             Requested size: 75.5957pt x 105.83838pt.
 
-<figures/exp/tc_roth_profile.png, id=417, 306.14375pt x 421.575pt>
+<figures/exp/tc_roth_profile.png, id=426, 306.14375pt x 421.575pt>
 File: figures/exp/tc_roth_profile.png Graphic file (type png)
 
 <use figures/exp/tc_roth_profile.png>
@@ -1601,7 +1607,7 @@ eps-converted-to.pdf figures/exp/wm_roth_front.eps>
 (epstopdf)             \includegraphics on input line 439.
 Package epstopdf Info: Output file is already uptodate.
 
-<figures/exp/wm_roth_front-eps-converted-to.pdf, id=419, 578.16pt x 433.62pt>
+<figures/exp/wm_roth_front-eps-converted-to.pdf, id=428, 578.16pt x 433.62pt>
 File: figures/exp/wm_roth_front-eps-converted-to.pdf Graphic file (type pdf)
 
 <use figures/exp/wm_roth_front-eps-converted-to.pdf>
@@ -1631,7 +1637,7 @@ File: figures/exp/wm_profile.jpg Graphic file (type jpg)
 Package pdftex.def Info: figures/exp/wm_profile.jpg used on input line 441.
 (pdftex.def)             Requested size: 75.59717pt x 105.84152pt.
 
-<figures/exp/wm_roth_profile2.png, id=422, 193.72375pt x 305.14pt>
+<figures/exp/wm_roth_profile2.png, id=431, 193.72375pt x 305.14pt>
 File: figures/exp/wm_roth_profile2.png Graphic file (type png)
 
 <use figures/exp/wm_roth_profile2.png>
@@ -1698,10 +1704,10 @@ anged.
 Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 455.
  ) ) 
 Here is how much of TeX's memory you used:
- 7175 strings out of 493117
- 110801 string characters out of 6135433
- 214722 words of memory out of 5000000
- 10383 multiletter control sequences out of 15000+600000
+ 7179 strings out of 493117
+ 111000 string characters out of 6135433
+ 214767 words of memory out of 5000000
+ 10387 multiletter control sequences out of 15000+600000
  58923 words of font info for 91 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  32i,16n,27p,1389b,330s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -1718,10 +1724,10 @@ exmf-dist/fonts/type1/urw/symbol/usyr.pfb></usr/local/texlive/2014/texmf-dist/f
 onts/type1/urw/times/utmb8a.pfb></usr/local/texlive/2014/texmf-dist/fonts/type1
 /urw/times/utmr8a.pfb></usr/local/texlive/2014/texmf-dist/fonts/type1/urw/times
 /utmri8a.pfb>
-Output written on EGauthorGuidelines-VMV16-fin.pdf (8 pages, 5966506 bytes).
+Output written on EGauthorGuidelines-VMV16-fin.pdf (8 pages, 6110882 bytes).
 PDF statistics:
- 756 PDF objects out of 1000 (max. 8388607)
- 390 compressed objects within 4 object streams
+ 765 PDF objects out of 1000 (max. 8388607)
+ 392 compressed objects within 4 object streams
  58 named destinations out of 1000 (max. 500000)
- 591 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 596 words of extra memory for PDF output out of 10000 (max. 10000000)
 

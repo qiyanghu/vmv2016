@@ -315,24 +315,22 @@ We reconstructed 3D face models of various celebrities, including George Clooney
 
 %From the result in Figure~\ref{fig:all} we can see, compared with the previous method, our result has obvious improvement on the nose and the chin, as well as the eyes. In each iteration, the mesh is closer and closer to the real geometry, then the 3D face has better correspondence to images. A good correspondence is vital to create the reflectance intensity matrix $M$. The normals to reconstruct face is mainly from photometric stereo approach. Except the nose and chin, the silhouette constraint can improve the whole face quality.
 
-We plot the results in Figure~\ref{fig:all}. To compare the results , we re-implement the method in ~\cite{Roth:2015:UFR}. We test their method with the same dataset used in our implementation. 
-
-We also generated results with the code made available by Roth et al. ~\cite{Roth:2015:UFR}, but unfortunately this produced inferior results as shown in Figure~\ref{fig:all_roth} . Since they only provide a binary executable, we could not investigate the cause of this issue further.
+We plot our results in Figure~\ref{fig:all}. To compare the results , we re-implement the method in ~\cite{Roth:2015:UFR}. We test their method with the same dataset used in our implementation. We also generated results with the code made available by Roth et al. ~\cite{Roth:2015:UFR}, but unfortunately this produced inferior results as shown in Figure~\ref{fig:all_roth} . Since they only provide a binary executable, we could not investigate the cause of this issue further.
 
 \begin{figure}[htb]
 
   \includegraphics[height=.43\linewidth,width=.31 \linewidth,,trim=0  -20 0 0]{figures/exp/ed_front.jpg}  
-  \includegraphics[height=.43\linewidth,width=.34\linewidth,,trim=90  -40 90 -10,clip]{figures/exp/ed_roth_front.eps}  
-  \includegraphics[height=.43\linewidth,width=.33\linewidth,trim=90  -40 90 0,clip]{figures/exp/ed_front.eps}
+  \includegraphics[height=.43\linewidth,width=.33\linewidth,,trim=90  -40 90 -10,clip]{figures/exp/ed_roth_front.eps}  
+  \includegraphics[height=.42\linewidth,width=.34\linewidth,trim=90  -40 90 0,clip]{figures/exp/roth_ed_front.eps}
 
   \includegraphics[height=.43\linewidth,width=.31 \linewidth,,trim=0  -20 0 0]{figures/exp/ed_profile.jpg}
-  \includegraphics[height=.43\linewidth,width=.34\linewidth,trim=0  -20 0 0]{figures/exp/ed_roth_profile.png}  
-   \includegraphics[height=.43\linewidth,width=.33\linewidth,trim=90  -40 90 0,clip]{figures/exp/ed_profile.eps}  
+  \includegraphics[height=.43\linewidth,width=.33\linewidth,trim=0  -20 0 0]{figures/exp/ed_roth_profile.png}  
+   \includegraphics[height=.43\linewidth,width=.34\linewidth,trim=90  -40 90 0,clip]{figures/exp/roth_ed_profile.eps}   
 
   \centering
   
   \caption{\label{fig:all_roth}
-           Comparison results of different individuals between the state of the art technique by Roth et al.~\cite{Roth:2015:UFR} and our approach. The 2nd column are the results from the code made available from ~\cite{Roth:2015:UFR}, the 3rd column are our results.}
+            The 2nd column are the results from the code made available from ~\cite{Roth:2015:UFR}, the 3rd column are our re-implementation results.}
 \end{figure}
 
 %-------------------------------------------------------------------------
